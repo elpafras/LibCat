@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
@@ -43,8 +44,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.compose.foundation.layout)
 
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
+    implementation(platform(libs.androidx.compose.bom))
 
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
