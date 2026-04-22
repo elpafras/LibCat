@@ -12,7 +12,7 @@ fun SettingBottomSheet(
     onDismiss: () -> Unit,
     viewModel: SettingViewModel = viewModel()
 ) {
-    FontBottomSheet(
+    CollectionBottomSheet(
         show = show,
         selected = viewModel.fontSize.collectAsState().value,
         onSelected = { viewModel.setFontSize(it) },
