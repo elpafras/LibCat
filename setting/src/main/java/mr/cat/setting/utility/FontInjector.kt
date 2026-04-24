@@ -40,15 +40,14 @@ class FontInjector(private val registry: FontRegistry) {
     }
 
     fun switchFont(webView: WebView, option: FontStyleOption) {
+        if (!injected) {
+            injectFontFaces(webView)
+        }
         val fontFamily = option.toFontName()
         Log.d("FontInjector", "switchFont: $fontFamily")
         webView.evaluateJavascript(
             "document.body.style.fontFamily = '$fontFamily';",
             null
         )
-    }
-
-    fun reset() {
-        injected = false
     }
 }
