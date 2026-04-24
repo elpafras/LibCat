@@ -1,6 +1,5 @@
 package mr.cat.setting.component.model
 
-import android.content.Context
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -18,21 +17,12 @@ fun FontStyleOption.toFontFamily(): FontFamily? = when (this) {
     FontStyleOption.TITILLIUM_WEB -> FontFamily(Font(R.font.titilliumweb, FontWeight.Normal))
 }
 
-// untuk androidview dan webview
-fun FontStyleOption.toBase64Font(context: Context): String? {
-    val fontFile = when (this) {
-        FontStyleOption.ARIMO -> "font/arimo.ttf"
-        FontStyleOption.MERRIWEATHER -> "font/merriweather.ttf"
-        FontStyleOption.TITILLIUM_WEB -> "font/titillium_web.ttf"
-        FontStyleOption.DEFAULT -> return null
-    }
-
-    return try {
-        val bytes = context.assets.open(fontFile).readBytes()
-        android.util.Base64.encodeToString(bytes, android.util.Base64.NO_WRAP)
-    } catch (e: Exception) {
-        null
-    }
+// untuk nama font di CSS/WebView/AndroidView
+fun FontStyleOption.toFontName(): String = when (this) {
+    FontStyleOption.DEFAULT -> "sans-serif"
+    FontStyleOption.ARIMO -> "Arimo"
+    FontStyleOption.MERRIWEATHER -> "Merriweather"
+    FontStyleOption.TITILLIUM_WEB -> "Titillium Web"
 }
 
 fun FontStyleOption.toLabel(): String = when (this) {
