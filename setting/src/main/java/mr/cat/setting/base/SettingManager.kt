@@ -2,8 +2,10 @@ package mr.cat.setting.base
 
 import android.content.Context
 import android.webkit.WebView
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import mr.cat.setting.utility.FontInjector
@@ -30,8 +32,10 @@ class SettingManager(
 
     fun observeFontChange(webView: WebView, lifecycleOwner: LifecycleOwner) {
         lifecycleOwner.lifecycleScope.launch {
-            viewModel.fontStyle.collect { option ->
-                fontInjector.switchFont(webView, option)
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fontStyle.collect { option ->
+                    fontInjector.switchFont(webView, option)
+                }
             }
         }
     }
