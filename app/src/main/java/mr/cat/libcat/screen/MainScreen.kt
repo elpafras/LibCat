@@ -29,6 +29,13 @@ fun MainScreen(modifier: Modifier = Modifier) {
     var showSheet by remember { mutableStateOf(false) }
     val setting = rememberSettingState()
 
+    var showWebViewTest by remember { mutableStateOf(false) }
+
+    if (showWebViewTest) {
+        WebViewTestScreen()
+        return
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -53,6 +60,12 @@ fun MainScreen(modifier: Modifier = Modifier) {
 
             Button(onClick = { showSheet = true }) {
                 Text("Open BottomSheet")
+            }
+
+            Button(onClick = {
+                showWebViewTest = true
+            }) {
+                Text("Test WebView Font")
             }
         }
 

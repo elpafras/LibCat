@@ -1,5 +1,6 @@
 package mr.cat.setting.utility
 
+import android.util.Log
 import android.webkit.WebView
 import mr.cat.setting.component.model.FontStyleOption
 import mr.cat.setting.component.model.toFontName
@@ -9,9 +10,16 @@ class FontInjector(private val registry: FontRegistry) {
     private var injected = false
 
     fun injectFontFaces(webView: WebView) {
-        if (injected) return
+        if (injected) {
+            Log.d("FontInjector", "already injected, skip")
+            return
+        }
         val css = registry.buildFontFaceCSS()
-        if (css.isBlank()) return
+        Log.d("FontInjector", "css length: ${css.length}")
+        if (css.isBlank()) {
+            Log.e("FontInjector", "css is blank, abort inject")
+            return
+        }
 
         val js = """
             (function() {
@@ -26,11 +34,14 @@ class FontInjector(private val registry: FontRegistry) {
         """.trimIndent()
 
         webView.evaluateJavascript(js, null)
+
+        Log.d("FontInjector", "inject success")
         injected = true
     }
 
     fun switchFont(webView: WebView, option: FontStyleOption) {
         val fontFamily = option.toFontName()
+        Log.d("FontInjector", "switchFont: $fontFamily")
         webView.evaluateJavascript(
             "document.body.style.fontFamily = '$fontFamily';",
             null
