@@ -16,15 +16,11 @@ class FontRegistry(private val context: Context) {
             return cache[option]
         }
 
-        val fontFile = when (option) {
-            FontStyleOption.ARIMO -> "font/arimo.ttf"
-            FontStyleOption.MERRIWEATHER -> "font/merriweather.ttf"
-            FontStyleOption.TITILLIUM_WEB -> "font/titilliumweb.ttf"
-            FontStyleOption.DEFAULT -> return null.also { cache[option] = null }
-        }
+        val fontFile = option.fontFileName
+            ?: return null.also { cache[option] = null }
 
         return try {
-            val bytes = context.assets.open(fontFile).readBytes()
+            val bytes = context.assets.open("font/$fontFile.ttf").readBytes()
             Log.d("FontRegistry", "encode success: $option, size: ${bytes.size}")
             Base64.encodeToString(bytes, Base64.NO_WRAP).also { cache[option] = it }
         } catch (e: Exception) {

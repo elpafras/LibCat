@@ -1,6 +1,5 @@
 package mr.cat.setting.component
 
-import android.graphics.drawable.Drawable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,8 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import mr.cat.setting.R
+import mr.cat.setting.component.model.FontCategory
 import mr.cat.setting.component.model.FontStyleOption
 import mr.cat.setting.component.model.toFontFamily
 import mr.cat.setting.component.model.toLabel
@@ -37,16 +40,17 @@ fun FontStyleSelector(
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val options = FontStyleOption.entries
-
     val rotation by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f,
         label = "arrow_rotation"
     )
 
+    // group font by category
+    val grouped = FontStyleOption.entries.groupBy { it.category }
+
     Column(modifier = modifier.fillMaxWidth()) {
 
-        // Trigger / Box yang diklik
+        // trigger box
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -76,25 +80,44 @@ fun FontStyleSelector(
             }
         }
 
-        // Dropdown
+        // dropdown dengan sub-group
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
             modifier = Modifier.fillMaxWidth()
         ) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = option.toLabel(),
-                            fontFamily = option.toFontFamily()
-                        )
-                    },
-                    onClick = {
-                        onSelected(option)
-                        expanded = false
-                    }
+            FontCategory.entries.forEach { category ->
+                val fontsInCategory = grouped[category] ?: return@forEach
+
+                // header kategori
+                Text(
+                    text = category.label,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                 )
+
+                // item per font
+                fontsInCategory.forEach { option ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = option.toLabel(),
+                                fontFamily = option.toFontFamily()
+                            )
+                        },
+                        onClick = {
+                            onSelected(option)
+                            expanded = false
+                        }
+                    )
+                }
+
+                // divider antar kategori kecuali yang terakhir
+                if (category != FontCategory.entries.last()) {
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+                }
             }
         }
     }
