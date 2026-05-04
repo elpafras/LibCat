@@ -50,4 +50,9 @@ class FontInjector(private val registry: FontRegistry) {
             null
         )
     }
+
+    fun reset() {
+        injected = false
+        Log.d("FontInjector", "reset")
+    }
 }

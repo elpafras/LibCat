@@ -13,7 +13,7 @@ import mr.cat.setting.utility.FontRegistry
 import mr.cat.setting.viewmodel.SettingViewModel
 
 class SettingManager(
-    private val context: Context,
+    context: Context,
     private val viewModel: SettingViewModel
 ) {
     private val fontRegistry = FontRegistry(context)
@@ -38,5 +38,9 @@ class SettingManager(
                 }
             }
         }
+    }
+
+    fun onPageReload() {
+        fontInjector.reset()
     }
 }
