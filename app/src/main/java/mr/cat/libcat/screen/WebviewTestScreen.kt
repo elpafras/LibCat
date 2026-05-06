@@ -19,29 +19,30 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import mr.cat.setting.SettingBottomSheet
 import mr.cat.setting.base.SettingManager
+import mr.cat.setting.utility.FontInjector
+import mr.cat.setting.utility.FontRegistry
 import mr.cat.setting.viewmodel.SettingViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WebViewTestScreen(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val settingViewModel: SettingViewModel = viewModel()
-    val settingManager = remember { SettingManager(context, settingViewModel) }
+    val settingManager = remember {
+        SettingManager(
+            viewModel = settingViewModel,
+            fontInjector = FontInjector(FontRegistry())
+        )
+    }
 
     var showSheet by remember { mutableStateOf(false) }
     var webViewRef by remember { mutableStateOf<WebView?>(null) }
-
-    LaunchedEffect(Unit) {
-        settingManager.initialize(lifecycleOwner)
-    }
 
     Column(modifier = modifier.fillMaxSize()) {
         TopAppBar(title = { Text("WebView Font Test") })
@@ -53,7 +54,7 @@ fun WebViewTestScreen(modifier: Modifier = Modifier) {
                     webViewClient = object : WebViewClient() {
                         override fun onPageFinished(view: WebView, url: String) {
                             super.onPageFinished(view, url)
-                            settingManager.applyFontTo(view)
+                            settingManager.applyCurrentFont(view)
                         }
                     }
                     loadDataWithBaseURL(
@@ -100,7 +101,7 @@ fun WebViewTestScreen(modifier: Modifier = Modifier) {
     // observe font change
     webViewRef?.let { wv ->
         LaunchedEffect(wv) {
-            settingManager.observeFontChange(wv, lifecycleOwner)
+            settingManager.bindFont(wv, lifecycleOwner)
         }
     }
 }

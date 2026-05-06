@@ -46,7 +46,7 @@ fun FontStyleOption.toFontFamily(): FontFamily? = when (this) {
     FontStyleOption.ROBOTO_SLAB -> FontFamily(Font(R.font.robotoslab, FontWeight.Normal))
     FontStyleOption.TITILLIUM_WEB -> FontFamily(Font(R.font.titilliumweb, FontWeight.Normal))
     FontStyleOption.MERRIWEATHER -> FontFamily(Font(R.font.merriweather, FontWeight.Normal))
-    FontStyleOption.LUSTRIA -> FontFamily(Font(R.font.lustira, FontWeight.Normal))
+    FontStyleOption.LUSTRIA -> FontFamily(Font(R.font.lustria, FontWeight.Normal))
     FontStyleOption.TINOS -> FontFamily(Font(R.font.tinos, FontWeight.Normal))
     FontStyleOption.PLAYFAIR_DISPLAY -> FontFamily(Font(R.font.playfairdisplay, FontWeight.Normal))
     FontStyleOption.COMIC_NEUE -> FontFamily(Font(R.font.comicneue, FontWeight.Normal))

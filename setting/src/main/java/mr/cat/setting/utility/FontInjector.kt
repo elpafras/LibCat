@@ -7,52 +7,56 @@ import mr.cat.setting.component.model.toFontName
 
 class FontInjector(private val registry: FontRegistry) {
 
-    private var injected = false
+    /**
+     * Inject @font-face ke WebView untuk font tertentu.
+     * Idempotent: tidak akan inject ulang jika sudah ada di DOM.
+     */
+    fun injectFontFace(webView: WebView, option: FontStyleOption) {
+        val css = registry.buildFontFaceCSS(option) ?: return
 
-    fun injectFontFaces(webView: WebView) {
-        if (injected) {
-            Log.d("FontInjector", "already injected, skip")
-            return
-        }
-        val css = registry.buildFontFaceCSS()
-        Log.d("FontInjector", "css length: ${css.length}")
-        if (css.isBlank()) {
-            Log.e("FontInjector", "css is blank, abort inject")
-            return
-        }
+        val styleId = "libcat-font-face-${option.name}"
 
         val js = """
             (function() {
-                var style = document.getElementById('libcat-font-face');
-                if (!style) {
-                    style = document.createElement('style');
-                    style.id = 'libcat-font-face';
-                    document.head.appendChild(style);
-                }
+                var existing = document.getElementById('$styleId');
+                if (existing) return;
+
+                var style = document.createElement('style');
+                style.id = '$styleId';
                 style.textContent = `$css`;
+                document.head.appendChild(style);
             })();
         """.trimIndent()
 
+        Log.d("FontInjector", "injectFontFace: ${option.name}")
         webView.evaluateJavascript(js, null)
-
-        Log.d("FontInjector", "inject success")
-        injected = true
     }
 
+    /**
+     * Mengganti font aktif di halaman.
+     * Akan memastikan font sudah diinject terlebih dahulu (lazy).
+     */
     fun switchFont(webView: WebView, option: FontStyleOption) {
-        if (!injected) {
-            injectFontFaces(webView)
-        }
         val fontFamily = option.toFontName()
+
+        // Lazy inject hanya untuk font ini
+        injectFontFace(webView, option)
+
+        val js = """
+            (function() {
+                document.body.style.fontFamily = '$fontFamily';
+            })();
+        """.trimIndent()
+
         Log.d("FontInjector", "switchFont: $fontFamily")
-        webView.evaluateJavascript(
-            "document.body.style.fontFamily = '$fontFamily';",
-            null
-        )
+        webView.evaluateJavascript(js, null)
     }
 
+    /**
+     * Optional: reset tidak lagi diperlukan karena tidak ada state lokal.
+     * Disediakan untuk kompatibilitas dengan API lama.
+     */
     fun reset() {
-        injected = false
-        Log.d("FontInjector", "reset")
+        Log.d("FontInjector", "reset (no-op)")
     }
 }
