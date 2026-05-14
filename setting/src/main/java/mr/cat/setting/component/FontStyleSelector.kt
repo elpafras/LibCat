@@ -30,8 +30,6 @@ import androidx.compose.ui.unit.sp
 import mr.cat.setting.R
 import mr.cat.setting.component.model.FontCategory
 import mr.cat.setting.component.model.FontStyleOption
-import mr.cat.setting.component.model.toFontFamily
-import mr.cat.setting.component.model.toLabel
 
 @Composable
 fun FontStyleSelector(

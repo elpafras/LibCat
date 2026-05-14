@@ -3,7 +3,6 @@ package mr.cat.setting.utility
 import android.util.Log
 import android.webkit.WebView
 import mr.cat.setting.component.model.FontStyleOption
-import mr.cat.setting.component.model.toFontName
 
 class FontInjector(private val registry: FontRegistry) {
 

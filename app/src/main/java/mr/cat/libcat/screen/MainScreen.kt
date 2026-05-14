@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import mr.cat.setting.SettingBottomSheet
-import mr.cat.setting.component.model.toFontFamily
 import mr.cat.setting.component.model.toTextUnit
 import mr.cat.setting.rememberSettingState
 

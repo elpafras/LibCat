@@ -2,9 +2,8 @@ package mr.cat.setting.utility
 
 import android.util.Log
 import mr.cat.setting.component.model.FontStyleOption
-import mr.cat.setting.component.model.toFontName
 
-class FontRegistry() {
+class FontRegistry {
     fun buildFontFaceCSS(option: FontStyleOption): String? {
         val fontFile = option.fontFileName
             ?: return null.also {

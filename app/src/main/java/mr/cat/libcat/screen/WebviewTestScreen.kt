@@ -54,7 +54,7 @@ fun WebViewTestScreen(modifier: Modifier = Modifier) {
                     webViewClient = object : WebViewClient() {
                         override fun onPageFinished(view: WebView, url: String) {
                             super.onPageFinished(view, url)
-                            settingManager.applyCurrentFont(view)
+                            settingManager.notifyPageReady(view)
                         }
                     }
                     loadDataWithBaseURL(
@@ -101,7 +101,7 @@ fun WebViewTestScreen(modifier: Modifier = Modifier) {
     // observe font change
     webViewRef?.let { wv ->
         LaunchedEffect(wv) {
-            settingManager.bindFont(wv, lifecycleOwner)
+            settingManager.bind(wv, lifecycleOwner)
         }
     }
 }

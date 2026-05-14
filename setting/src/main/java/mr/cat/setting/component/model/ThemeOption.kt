@@ -2,90 +2,135 @@ package mr.cat.setting.component.model
 
 import androidx.compose.ui.graphics.Color
 
+data class ThemeColors(
+    val background: Color,
+    val text: Color,
+    val topBar: Color,
+    val topBarText: Color
+)
+
 data class ThemeOption(
     val id: String,
     val label: String,
-    val backgroundColor: Color,
-    val fontColor: Color,
-    val topBarColor: Color
+    val colors: ThemeColors
+)
+
+private fun theme(
+    id: String,
+    label: String,
+    background: Long,
+    text: Long,
+    topBar: Long,
+    topBarText: Long
+) = ThemeOption(
+    id = id,
+    label = label,
+    colors = ThemeColors(
+        background = Color(background),
+        text = Color(text),
+        topBar = Color(topBar),
+        topBarText = Color(topBarText)
+    )
 )
 
 val defaultThemes = listOf(
-    ThemeOption(
+
+    theme(
         id = "hvs",
         label = "Kertas HVS",
-        backgroundColor = Color(0xFFFFFFFF),
-        fontColor = Color(0xFF000000),
-        topBarColor = Color(0xFFFFFFFF)
+        background = 0xFFFFFFFF,
+        text = 0xFF000000,
+        topBar = 0xFF000000,
+        topBarText = 0xFFFFFFFF
     ),
-    ThemeOption(
+
+    theme(
         id = "padang_pasir",
         label = "Padang Pasir",
-        backgroundColor = Color(0xFFF0ECD9),
-        fontColor = Color(0xFF512507),
-        topBarColor = Color(0xFFF0ECD9)
+        background = 0xFFF1ECD9,
+        text = 0xFF4D250F,
+        topBar = 0xFF6F5C45,
+        topBarText = 0xFFFCF9DA
     ),
-    ThemeOption(
+
+    theme(
         id = "langit_cerah",
         label = "Langit Cerah",
-        backgroundColor = Color(0xFFE7F8FF),
-        fontColor = Color(0xFF2CA6ED),
-        topBarColor = Color(0xFFE7F8FF)
+        background = 0xFFE7F8FF,
+        text = 0xFF2CA6ED,
+        topBar = 0xFF007DC6,
+        topBarText = 0xFFE7F8FF
     ),
-    ThemeOption(
+
+    theme(
         id = "pink_pastel",
         label = "Pink Pastel",
-        backgroundColor = Color(0xFFFFD6E5),
-        fontColor = Color(0xFF773B8F),
-        topBarColor = Color(0xFFFFD6E5)
+        background = 0xFFFFD6E5,
+        text = 0xFF773B8F,
+        topBar = 0xFF510072,
+        topBarText = 0xFFFFD6E5
     ),
-    ThemeOption(
+
+    theme(
         id = "kuning_pastel",
         label = "Kuning Pastel",
-        backgroundColor = Color(0xFFFED68B),
-        fontColor = Color(0xFF000000),
-        topBarColor = Color(0xFFFED68B)
+        background = 0xFFFED68B,
+        text = 0xFF000000,
+        topBar = 0xFFFED68B,
+        topBarText = 0xFFFDD68B
     ),
-    ThemeOption(
+
+    theme(
         id = "hijau_lumut",
         label = "Hijau Lumut",
-        backgroundColor = Color(0xFF267A6E),
-        fontColor = Color(0xFFFFFFFF),
-        topBarColor = Color(0xFF267A6E)
+        background = 0xFF267A6E,
+        text = 0xFFFFFFFF,
+        topBar = 0xFFFFFFFF,
+        topBarText = 0xFF267A6E
     ),
-    ThemeOption(
+
+    theme(
         id = "batang_kayu",
         label = "Batang Kayu",
-        backgroundColor = Color(0xFF3C2620),
-        fontColor = Color(0xFFFFF6EA),
-        topBarColor = Color(0xFF3C2620)
+        background = 0xFF3C2620,
+        text = 0xFFFFF6EA,
+        topBar = 0xFFFFF6EA,
+        topBarText = 0xFF3C2620
     ),
-    ThemeOption(
+
+    theme(
         id = "material_gelap",
         label = "Material Gelap",
-        backgroundColor = Color(0xFF2F2F2F),
-        fontColor = Color(0xFFEAEAEA),
-        topBarColor = Color(0xFF2F2F2F)
+        background = 0xFF2F2F2F,
+        text = 0xFFEAEAEA,
+        topBar = 0xFFEAEAEA,
+        topBarText = 0xFF2F2F2F
     ),
-    ThemeOption(
+
+    theme(
         id = "malam_cerah",
         label = "Malam Cerah",
-        backgroundColor = Color(0xFF10243E),
-        fontColor = Color(0xFFF2F2F2),
-        topBarColor = Color(0xFF10243E)
+        background = 0xFF10243E,
+        text = 0xFFF2F2F2,
+        topBar = 0xFFF2F2F2,
+        topBarText = 0xFF10243E
     ),
-    ThemeOption(
+
+    theme(
         id = "malam_berbintang",
         label = "Malam Berbintang",
-        backgroundColor = Color(0xFF081526),
-        fontColor = Color(0xFFFCE98A),
-        topBarColor = Color(0xFF081526)
+        background = 0xFF081526,
+        text = 0xFFFCE98A,
+        topBar = 0xFFFCE98A,
+        topBarText = 0xFF081526
     ),
-    ThemeOption(
+
+    theme(
         id = "papan_tulis",
         label = "Papan Tulis",
-        backgroundColor = Color(0xFF1A1919),
-        fontColor = Color(0xFFFFFFFF),
-        topBarColor = Color(0xFF1A1919)
+        background = 0xFF1A1919,
+        text = 0xFFFFFFFF,
+        topBar = 0xFFFFFFFF,
+        topBarText = 0xFF1A1919
     )
 )
