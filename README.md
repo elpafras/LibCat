@@ -1,25 +1,36 @@
 # LibCat 🐱
 
-LibCat is a comprehensive Android library designed to simplify common app configurations such as font settings, theme management, audio controls, and more. It provides ready-to-use UI components and utility classes to enhance user experience with minimal effort.
+[![Android API](https://img.shields.io/badge/API-26%2B-brightgreen.svg)](https://android-arsenal.com/api?level=26)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**LibCat** is a modern, lightweight Android library built with **Jetpack Compose** designed to simplify common application configuration tasks. It provides a set of plug-and-play components for font management, theme switching, and dynamic UI adjustments, specifically optimized for content-heavy applications like e-book readers or news apps.
+
+---
+
+## ✨ Why LibCat?
+
+Building a robust settings system (fonts, themes, persistent storage) usually involves a lot of boilerplate code. LibCat handles the heavy lifting:
+- **Zero-Boilerplate Persistence**: Integrated with Jetpack DataStore.
+- **Modern UI**: Pure Jetpack Compose with Material 3 support.
+- **WebView Ready**: Powerful injection system to sync app styles with WebView content.
+- **Modular**: Only use what you need.
 
 ---
 
 ## 🚀 Features
 
-### Current (v1.0.0)
-- **Font Settings**: Change font family and font style dynamically.
-- **Theme Management**: Switch between different app themes.
-- **WebView Injection**: Seamlessly inject custom fonts and styles into `WebView` content (perfect for reader apps).
-- **Persistence**: Built-in persistence using Jetpack DataStore.
-- **Compose Ready**: Modern UI components built with Jetpack Compose.
+### 🎨 Theme & UI
+- **Theme Switcher**: Easy toggling between Light, Dark, and Custom themes.
+- **Font Customization**: Built-in selectors for Font Family, Font Size, and Font Style.
+- **Material 3**: Fully compatible with the latest Material Design guidelines.
 
-### 🗺️ Roadmap (Coming Soon)
-- 🔊 **Audio Management**: Unified API for handling app sounds and music.
-- 🪟 **Pop-up Components**: Customizable dialogs, tooltips, and snackbars.
-- 🌐 **Language/Localization**: Easy on-the-fly language switching.
-- 🛠️ **DI Support**: First-class support for Hilt and Koin.
-- 📱 **Multiplatform (KMP)**: Expanding to iOS and Desktop.
-- 🧪 **Testing**: Comprehensive Unit and Screenshot tests.
+### 🌐 WebView Integration
+- **Dynamic Injection**: Seamlessly apply user-selected fonts and CSS styles into `WebView` content on-the-fly.
+- **Lifecycle Aware**: Automatically manages style updates during page loads and app lifecycle events.
+
+### 💾 Performance & Storage
+- **Jetpack DataStore**: Fast, asynchronous, and safe data persistence.
+- **ViewModel Powered**: State-driven architecture for a reactive UI.
 
 ---
 
@@ -42,33 +53,41 @@ Then, add the dependency to your module-level `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.elpafras:LibCat:1.0.0")
+    implementation("com.github.elpafras:LibCat:{version}")
 }
 ```
 
 ---
 
-## 🛠️ Usage Guide
+## 🛠️ Quick Start
 
-### 1. Initialize SettingViewModel and SettingManager
-
-In your Composable, set up the `SettingViewModel` and `SettingManager`. The `SettingManager` is responsible for applying settings to components like `WebView`.
+### 1. Provide the Settings
+Wrap your application or screen with `SettingsProvider` to initialize the environment:
 
 ```kotlin
-val settingViewModel: SettingViewModel = viewModel()
-val settingManager = remember {
-    SettingManager(
-        viewModel = settingViewModel,
-        fontInjector = FontInjector(FontRegistry())
-    )
+SettingsProvider {
+    MainScreen()
 }
 ```
 
-### 2. Integrate with WebView (Optional)
-
-If you are building a reader app, you can bind the `SettingManager` to a `WebView` to automatically apply font and theme changes.
+### 2. Show the Settings UI
+Use the pre-built `SettingBottomSheet` to give users control:
 
 ```kotlin
+var showSheet by remember { mutableStateOf(false) }
+
+SettingBottomSheet(
+    show = showSheet,
+    onDismiss = { showSheet = false }
+)
+```
+
+### 3. Sync with WebView
+To inject styles into a WebView, use the `SettingManager`:
+
+```kotlin
+val settingManager = LocalSettingManager.current
+
 AndroidView(
     factory = { ctx ->
         WebView(ctx).apply {
@@ -77,33 +96,29 @@ AndroidView(
                     settingManager.notifyPageReady(view)
                 }
             }
-            // Load your content...
         }
     }
 )
-
-// Bind settings to the WebView lifecycle
-LaunchedEffect(webViewRef) {
-    settingManager.bind(webViewRef, lifecycleOwner)
-}
 ```
 
-### 3. Show the Settings Bottom Sheet
+---
 
-Easily provide a UI for users to change their settings using the built-in `SettingBottomSheet`.
+## 🛠️ Tech Stack
 
-```kotlin
-var showSheet by remember { mutableStateOf(false) }
+- **UI**: Jetpack Compose (Material 3)
+- **Language**: Kotlin
+- **Storage**: Jetpack DataStore (Preferences)
+- **Architecture**: MVVM / State-Driven
+- **Target SDK**: 37+ (Android 8.0 API 26+)
 
-Button(onClick = { showSheet = true }) {
-    Text("Open Settings")
-}
+---
 
-SettingBottomSheet(
-    show = showSheet,
-    onDismiss = { showSheet = false }
-)
-```
+## 🗺️ Roadmap
+
+- [ ] 🔊 **Audio Management**: Unified API for handling app sounds.
+- [ ] 🪟 **Pop-up Components**: Customizable dialogs and tooltips.
+- [ ] 🌐 **Localization**: On-the-fly language switching.
+- [ ] 📱 **Multiplatform**: Initial support for Kotlin Multiplatform (KMP).
 
 ---
 
@@ -113,4 +128,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request or open an Issue.
+
+---
+*Made with ❤️ for Android Developers.*
