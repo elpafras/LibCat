@@ -6,6 +6,9 @@ plugins {
     id("maven-publish")
 }
 
+group = project.findProperty("group") as? String ?: "com.github.elpafras"
+version = project.findProperty("version") as? String ?: "1.3.1"
+
 kotlin {
     androidTarget {
         publishLibraryVariants("release")
@@ -62,14 +65,5 @@ android {
     }
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                groupId = "com.github.elpafras"
-                artifactId = "setting"
-                version = "1.0.0"
-            }
-        }
-    }
-}
+// KMP plugin will automatically create publications for all targets.
+// We only need to configure them if we need custom metadata.
