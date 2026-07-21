@@ -1,0 +1,62 @@
+roadmap
+
+1.0
+- tambah function change Font Family, Font Style, Theme
+- DataStore Persistence
+- semua function dimasukkan ke dalam SettingBottomSheet
+
+2.0
+- custom tema, font Family, font size (pengguna bisa inject sesuai kemauan mereka)
+
+3.0
+- Melengkapi Dokumentasi
+- buat Demo App
+- ada CHANGELOG
+
+4.0
+- Multi-DataStore
+- DI Support (hilt/Koin)
+- Compose MultiPlatform (Android + Desktop + iOS (KMP)
+- Unit Test Lengkap
+- Screenshot Test (Pastikan UI tidak regresi)
+
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: directory '/home/elan/.gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/home/elan/.gnupg/openpgp-revocs.d/F28EDA3B0A5FFF32269538106ECF0D5A0BF15BE7.rev'
+public and secret key created and signed.
+
+pub   ed25519 2026-04-16 [SC] [expires: 2029-04-15]
+      F28EDA3B0A5FFF32269538106ECF0D5A0BF15BE7
+uid                      elpafras <elpafrasdriko@gmail.com>
+sub   cv25519 2026-04-16 [E] [expires: 2029-04-15]
+
+-------------------------------------------------------
+<server>
+	<id>${server}</id>
+	<username>LBdM5e</username>
+	<password>R7ZChGkKMCfhtR7ctmD2odbxx2s0fztZ9</password>
+</server>
+
+username: LBdM5e
+pw: R7ZChGkKMCfhtR7ctmD2odbxx2s0fztZ9
+us:pw(base64) = LBdM5e:R7ZChGkKMCfhtR7ctmD2odbxx2s0fztZ9
+
+-------------------------------------------------------
+<server>
+	<id>${server}</id>
+	<username>praKrU</username>
+	<password>He2RPBvnZOmUVmvMGQtN7FtjDDAR8XY7V</password>
+</server>
+
+praKrU
+
+He2RPBvnZOmUVmvMGQtN7FtjDDAR8XY7V
+
+praKrU:He2RPBvnZOmUVmvMGQtN7FtjDDAR8XY7V

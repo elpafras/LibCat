@@ -1,0 +1,9 @@
+- [x] Restrukturisasi LibCat ke Kotlin Multiplatform (Tahap 1)
+    - [x] Update `libs.versions.toml` dengan dependensi KMP & Compose Multiplatform
+    - [x] Konfigurasi `setting/build.gradle.kts` untuk Kotlin Multiplatform
+    - [x] Pindahkan model data ke `commonMain`
+    - [x] Implementasi `SettingRepository` dan `SettingDataStoreRepository` di `commonMain`
+    - [x] Implementasi `expect/actual` untuk `createDataStore`
+    - [x] Migrasi `SettingViewModel` ke `commonMain` (Multiplatform Lifecycle)
+    - [x] Penyesuaian `SettingManager` dan `SettingBottomSheet` di `androidMain`
+- [x] Verifikasi Build Android

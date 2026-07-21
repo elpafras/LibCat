@@ -7,9 +7,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.Typography
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
+import mr.cat.setting.component.model.toFontFamily
+import mr.cat.setting.component.model.toTextUnit
+import mr.cat.setting.rememberSettingState
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -21,16 +28,6 @@ private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
     tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable
@@ -40,19 +37,55 @@ fun LibCatTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val settings = rememberSettingState()
+    val themeColors = settings.theme.colors
+    val fontFamily = settings.fontStyle.toFontFamily()
+    val fontSize = settings.fontSize.toTextUnit()
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colorScheme = when {
+        // We prioritize the theme from settings if it's not the default "hvs" or similar
+        // Or we can just map settings colors to MaterialTheme colors
+        else -> lightColorScheme(
+            primary = themeColors.topBar,
+            onPrimary = themeColors.topBarText,
+            primaryContainer = themeColors.topBar,
+            onPrimaryContainer = themeColors.topBarText,
+            background = themeColors.background,
+            onBackground = themeColors.text,
+            surface = themeColors.background,
+            onSurface = themeColors.text,
+            secondary = themeColors.topBar.copy(alpha = 0.8f),
+            onSecondary = themeColors.topBarText,
+            tertiary = themeColors.topBar.copy(alpha = 0.6f)
+        )
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+    val typography = Typography(
+        bodyLarge = TextStyle(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+            lineHeight = (fontSize.value + 8).sp,
+            letterSpacing = 0.5.sp
+        ),
+        titleLarge = TextStyle(
+            fontFamily = fontFamily,
+            fontSize = (fontSize.value + 6).sp,
+            lineHeight = (fontSize.value + 14).sp,
+            letterSpacing = 0.sp
+        ),
+        labelMedium = TextStyle(
+            fontFamily = fontFamily,
+            fontSize = (fontSize.value - 2).sp,
+            lineHeight = (fontSize.value + 4).sp,
+            letterSpacing = 0.5.sp
+        )
     )
+
+    CompositionLocalProvider(LocalLibCatSettings provides settings) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = typography,
+            content = content
+        )
+    }
 }

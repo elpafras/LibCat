@@ -13,15 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import mr.cat.libcat.ui.theme.LocalLibCatSettings
+import mr.cat.setting.component.model.toFontFamily
 import mr.cat.setting.component.model.toTextUnit
-import mr.cat.setting.rememberSettingState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsShowcaseScreen(
     onBack: () -> Unit
 ) {
-    val setting = rememberSettingState()
+    val setting = LocalLibCatSettings.current
     val themeColors = setting.theme.colors
     val fontFamily = setting.fontStyle.toFontFamily()
     val fontSize = setting.fontSize.toTextUnit()
