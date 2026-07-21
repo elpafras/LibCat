@@ -139,12 +139,12 @@ Daftarkan tema baru di `ThemeRegistry`. Setiap tema mendukung pemetaan lengkap k
 
 ## 📱 Platform Support
 
-| Fitur | Android | iOS |
-|---|:---:|:---:|
-| Native Compose Theming | ✅ | ✅ |
-| WebView Sync | ✅ | ✅ |
-| DataStore Persistence | ✅ | ✅ |
-| Material3 Integration | ✅ | ✅ |
+| Fitur                  | Android | iOS |
+|------------------------|:-------:|:---:|
+| Native Compose Theming |    ✅    |  ✅  |
+| WebView Sync           |    ✅    |  ✅  |
+| DataStore Persistence  |    ✅    |  ✅  |
+| Material3 Integration  |    ✅    |  ✅  |
 
 ---
 
