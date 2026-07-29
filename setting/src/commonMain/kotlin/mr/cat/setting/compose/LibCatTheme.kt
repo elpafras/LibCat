@@ -2,10 +2,14 @@ package mr.cat.setting.compose
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
+import mr.cat.setting.utility.SystemBarsController
+import mr.cat.setting.utility.SystemBarsUtils
 import mr.cat.setting.utility.ThemeRegistry
+import mr.cat.setting.utility.rememberSystemBarsController
 import mr.cat.setting.viewmodel.SettingViewModel
 
 /**
@@ -13,22 +17,28 @@ import mr.cat.setting.viewmodel.SettingViewModel
  * menyesuaikan seluruh komponen UI berdasarkan pengaturan pengguna di [SettingViewModel].
  *
  * @IMPORTANT
+ * LibCatTheme SENGAJA mengabaikan pengaturan mode gelap/terang sistem operasi 
+ * dan Dynamic Color (Material You). Seluruh tampilan visual aplikasi yang memakai 
+ * LibCat WAJIB mengikuti themeId yang dipilih user melalui SettingBottomSheet, 
+ * terlepas dari pengaturan sistem perangkat. Ini untuk menjaga konsistensi 
+ * pengalaman baca/konten lintas device dan mencegah konflik antara dua sumber 
+ * preferensi tema (sistem vs aplikasi).
+ *
+ * Developer TIDAK PERLU dan TIDAK DISARANKAN memanggil isSystemInDarkTheme() 
+ * secara manual di dalam scope LibCatTheme, karena state ColorScheme sudah dikunci 
+ * oleh ThemeRegistry.
+ *
+ * Mulai versi ini, Status Bar dan Navigation Bar sistem OTOMATIS sinkron dengan tema aktif 
+ * di Android. Untuk iOS, sinkronisasi visual mengikuti perilaku standar platform 
+ * (membutuhkan konfigurasi manual preferredStatusBarStyle di sisi project jika diperlukan).
+ *
+ * LibCatTheme menyediakan [SystemBarsController] via [SystemBarsUtils.LocalSystemBarsController]
+ * untuk akses manual jika diperlukan.
+ *
+ * @IMPORTANT
  * LibCatTheme WAJIB dipasang di root aplikasi (menggantikan MaterialTheme bawaan project),
  * supaya seluruh komponen Material3 di bawahnya (Card, Scaffold, Button, dll) 
  * otomatis mengikuti tema (warna, font, ukuran) dari LibCat.
- *
- * @NOTE
- * Untuk konten di dalam WebView, LibCatTheme TIDAK berlaku. Anda tetap perlu
- * menggunakan SettingManager terpisah untuk sinkronisasi CSS ke dalam WebView.
- *
- * Example Usage:
- * ```kotlin
- * setContent {
- *     LibCatTheme(viewModel = settingViewModel) {
- *         MainScreenContent()
- *     }
- * }
- * ```
  */
 @Composable
 fun LibCatTheme(
@@ -44,26 +54,42 @@ fun LibCatTheme(
         ThemeRegistry.resolveThemeColors(themeId)
     }
 
+    // 2. System Bars Sync
+    val systemBarsController = rememberSystemBarsController()
+    SideEffect {
+        systemBarsController?.applyTheme(
+            statusBarColor = settingColors.background,
+            navigationBarColor = settingColors.background, // Match background for edge-to-edge feel
+            useDarkIcons = ThemeRegistry.calculateContrastRatio(Color.Black, settingColors.background) > 4.5
+        )
+    }
+
     val colorScheme = remember(settingColors) {
-        // Menggunakan lightColorScheme sebagai base, lalu override dengan settingColors
-        lightColorScheme(
+        val base = if (settingColors.isDark) darkColorScheme() else lightColorScheme()
+        
+        base.copy(
             primary = settingColors.primary,
             onPrimary = settingColors.onPrimary,
+            primaryContainer = settingColors.primaryContainer,
+            onPrimaryContainer = settingColors.onPrimaryContainer,
             background = settingColors.background,
-            onBackground = settingColors.textColor,
+            onBackground = settingColors.onBackground,
             surface = settingColors.surface,
             onSurface = settingColors.onSurface,
             surfaceVariant = settingColors.surfaceVariant,
             onSurfaceVariant = settingColors.onSurfaceVariant,
-            secondary = settingColors.secondary,
-            onSecondary = settingColors.onSecondary,
+            surfaceContainer = settingColors.surfaceContainer,
+            surfaceContainerHigh = settingColors.surfaceContainer,
+            surfaceContainerLow = settingColors.surfaceContainer,
+            surfaceContainerLowest = settingColors.surfaceContainer,
+            surfaceContainerHighest = settingColors.surfaceContainer,
             outline = settingColors.outline,
             error = settingColors.error,
             onError = settingColors.onError,
         )
     }
 
-    // 2. Resolve Font & Typography
+    // 3. Resolve Font & Typography
     var fontFamily: FontFamily by remember { mutableStateOf(FontFamily.Default) }
     
     LaunchedEffect(fontStyle) {
@@ -71,11 +97,8 @@ fun LibCatTheme(
     }
 
     val baseSize = fontSizeOption
-    
     val typography = remember(fontFamily, baseSize) {
-        // Skala proporsional berdasarkan base fontSize (default 14sp)
         val scale = baseSize / 14f
-        
         Typography(
             displayLarge = TextStyle(fontFamily = fontFamily, fontSize = (57 * scale).sp),
             displayMedium = TextStyle(fontFamily = fontFamily, fontSize = (45 * scale).sp),
@@ -95,9 +118,13 @@ fun LibCatTheme(
         )
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        SystemBarsUtils.LocalSystemBarsController provides systemBarsController
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = typography,
+            content = content
+        )
+    }
 }

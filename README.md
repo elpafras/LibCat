@@ -137,12 +137,28 @@ Daftarkan tema baru di `ThemeRegistry`. Setiap tema mendukung pemetaan lengkap k
 
 ---
 
+## 📱 Sinkronisasi System Bars
+
+Mulai versi 1.3.1, **LibCat** secara otomatis mengelola warna OS-level chrome agar menyatu dengan tema aplikasi tanpa konfigurasi tambahan di sisi project pengguna.
+
+### Fitur Utama System Bars Sync:
+- **Auto-Sync**: Status bar dan navigation bar di Android akan otomatis mengikuti warna `background` dari tema yang aktif.
+- **Intelligent Icon Color**: LibCat menggunakan algoritma *contrast ratio* (WCAG standard) untuk menentukan apakah ikon sistem (jam, baterai, sinyal) harus berwarna gelap atau terang, memastikan legibilitas maksimal di segala warna background.
+- **Edge-to-Edge Experience**: Di Android, LibCat mendukung tampilan *edge-to-edge* dengan sinkronisasi warna bar navigasi bawah.
+- **CompositionLocal**: Tersedia `LocalSystemBarsController` jika Anda butuh memicu pembaruan warna secara manual atau melakukan kustomisasi di luar scope `LibCatTheme`.
+
+> [!NOTE]
+> **Catatan iOS:** Karena perbedaan arsitektur sistem, status bar di iOS mengikuti warna view di belakangnya secara transparan. Sinkronisasi style ikon (Light/Dark content) di iOS mungkin memerlukan konfigurasi manual pada root `UIViewController` project Anda.
+
+---
+
 ## 📱 Platform Support
 
 | Fitur                  | Android | iOS |
 |------------------------|:-------:|:---:|
 | Native Compose Theming |    ✅    |  ✅  |
 | WebView Sync           |    ✅    |  ✅  |
+| System Bars Sync       |    ✅    |  ⚠️  |
 | DataStore Persistence  |    ✅    |  ✅  |
 | Material3 Integration  |    ✅    |  ✅  |
 

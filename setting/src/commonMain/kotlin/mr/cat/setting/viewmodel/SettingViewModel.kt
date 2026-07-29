@@ -32,7 +32,7 @@ class SettingViewModel(
     val themeId = repository.themeIdFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = "hvs",
+        initialValue = "default",
     )
 
     fun setFontSize(size: Float) = viewModelScope.launch {

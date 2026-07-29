@@ -6,7 +6,8 @@ data class ThemeColors(
     val background: Color,
     val text: Color,
     val topBar: Color,
-    val topBarText: Color
+    val topBarText: Color,
+    val isDark: Boolean
 )
 
 data class ThemeOption(
@@ -21,7 +22,8 @@ private fun theme(
     background: Long,
     text: Long,
     topBar: Long,
-    topBarText: Long
+    topBarText: Long,
+    isDark: Boolean = false
 ) = ThemeOption(
     id = id,
     label = label,
@@ -29,11 +31,22 @@ private fun theme(
         background = Color(background),
         text = Color(text),
         topBar = Color(topBar),
-        topBarText = Color(topBarText)
+        topBarText = Color(topBarText),
+        isDark = isDark
     )
 )
 
 val defaultThemes = listOf(
+
+    theme(
+        id = "default",
+        label = "Default",
+        background = 0xFFF0F2F5,
+        text = 0xFF1C1B1F,
+        topBar = 0xFF3F51B5,
+        topBarText = 0xFFFFFFFF,
+        isDark = false
+    ),
 
     theme(
         id = "hvs",
@@ -41,7 +54,8 @@ val defaultThemes = listOf(
         background = 0xFFFFFFFF,
         text = 0xFF000000,
         topBar = 0xFF000000,
-        topBarText = 0xFFFFFFFF
+        topBarText = 0xFFFFFFFF,
+        isDark = false
     ),
 
     theme(
@@ -50,7 +64,8 @@ val defaultThemes = listOf(
         background = 0xFFF1ECD9,
         text = 0xFF4D250F,
         topBar = 0xFF6F5C45,
-        topBarText = 0xFFFCF9DA
+        topBarText = 0xFFFCF9DA,
+        isDark = false
     ),
 
     theme(
@@ -59,7 +74,8 @@ val defaultThemes = listOf(
         background = 0xFFE7F8FF,
         text = 0xFF2CA6ED,
         topBar = 0xFF007DC6,
-        topBarText = 0xFFE7F8FF
+        topBarText = 0xFFE7F8FF,
+        isDark = false
     ),
 
     theme(
@@ -68,7 +84,8 @@ val defaultThemes = listOf(
         background = 0xFFFFD6E5,
         text = 0xFF773B8F,
         topBar = 0xFF510072,
-        topBarText = 0xFFFFD6E5
+        topBarText = 0xFFFFD6E5,
+        isDark = false
     ),
 
     theme(
@@ -77,7 +94,8 @@ val defaultThemes = listOf(
         background = 0xFFFED68B,
         text = 0xFF000000,
         topBar = 0xFFFED68B,
-        topBarText = 0xFFFDD68B
+        topBarText = 0xFFFDD68B,
+        isDark = false
     ),
 
     theme(
@@ -86,7 +104,8 @@ val defaultThemes = listOf(
         background = 0xFF267A6E,
         text = 0xFFFFFFFF,
         topBar = 0xFFFFFFFF,
-        topBarText = 0xFF267A6E
+        topBarText = 0xFF267A6E,
+        isDark = true
     ),
 
     theme(
@@ -95,7 +114,8 @@ val defaultThemes = listOf(
         background = 0xFF3C2620,
         text = 0xFFFFF6EA,
         topBar = 0xFFFFF6EA,
-        topBarText = 0xFF3C2620
+        topBarText = 0xFF3C2620,
+        isDark = true
     ),
 
     theme(
@@ -104,7 +124,8 @@ val defaultThemes = listOf(
         background = 0xFF2F2F2F,
         text = 0xFFEAEAEA,
         topBar = 0xFFEAEAEA,
-        topBarText = 0xFF2F2F2F
+        topBarText = 0xFF2F2F2F,
+        isDark = true
     ),
 
     theme(
@@ -113,7 +134,8 @@ val defaultThemes = listOf(
         background = 0xFF10243E,
         text = 0xFFF2F2F2,
         topBar = 0xFFF2F2F2,
-        topBarText = 0xFF10243E
+        topBarText = 0xFF10243E,
+        isDark = true
     ),
 
     theme(
@@ -122,7 +144,8 @@ val defaultThemes = listOf(
         background = 0xFF081526,
         text = 0xFFFCE98A,
         topBar = 0xFFFCE98A,
-        topBarText = 0xFF081526
+        topBarText = 0xFF081526,
+        isDark = true
     ),
 
     theme(
@@ -131,6 +154,7 @@ val defaultThemes = listOf(
         background = 0xFF1A1919,
         text = 0xFFFFFFFF,
         topBar = 0xFFFFFFFF,
-        topBarText = 0xFF1A1919
+        topBarText = 0xFF1A1919,
+        isDark = true
     )
 )
