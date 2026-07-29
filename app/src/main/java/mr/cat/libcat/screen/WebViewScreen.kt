@@ -4,32 +4,35 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import mr.cat.libcat.ui.theme.LocalLibCatSettings
+import mr.cat.setting.SettingBottomSheet
 import mr.cat.setting.component.model.toFontFamily
-import mr.cat.setting.component.model.toTextUnit
 import mr.cat.setting.utility.ThemeInjector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WebViewScreen(
     url: String,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     val setting = LocalLibCatSettings.current
     val themeColors = setting.theme.colors
     val fontFamily = setting.fontStyle.toFontFamily()
-    val fontSize = setting.fontSize.toTextUnit()
+    val fontSize = setting.fontSize.sp
     
+    var showSheet by remember { mutableStateOf(value = false) }
     val themeInjector = remember { ThemeInjector() }
 
     var webViewInstance: WebView? by remember { mutableStateOf(null) }
-    var canGoBack by remember { mutableStateOf(false) }
-    var canGoForward by remember { mutableStateOf(false) }
+    var canGoBack by remember { mutableStateOf(value = false) }
+    var canGoForward by remember { mutableStateOf(value = false) }
 
     Scaffold(
         topBar = {
@@ -38,7 +41,7 @@ fun WebViewScreen(
                     Text(
                         "Browser", 
                         fontFamily = fontFamily,
-                        fontSize = fontSize
+                        fontSize = fontSize,
                     ) 
                 },
                 navigationIcon = {
@@ -49,7 +52,7 @@ fun WebViewScreen(
                 actions = {
                     IconButton(
                         onClick = { webViewInstance?.goBack() },
-                        enabled = canGoBack
+                        enabled = canGoBack,
                     ) {
                         Icon(
                             Icons.Default.ArrowBackIosNew, 
@@ -62,13 +65,16 @@ fun WebViewScreen(
                         enabled = canGoForward
                     ) {
                         Icon(
-                            Icons.Default.ArrowForwardIos, 
+                            Icons.AutoMirrored.Filled.ArrowForwardIos, 
                             contentDescription = "Forward",
                             tint = if (canGoForward) themeColors.topBarText else themeColors.topBarText.copy(alpha = 0.3f)
                         )
                     }
                     IconButton(onClick = { webViewInstance?.reload() }) {
                         Icon(Icons.Default.Refresh, contentDescription = "Reload", tint = themeColors.topBarText)
+                    }
+                    IconButton(onClick = { showSheet = true }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings", tint = themeColors.topBarText)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -94,6 +100,7 @@ fun WebViewScreen(
                             }
                         }
                     }
+                    @Suppress("SetJavaScriptEnabled") // Required for theme injection functionality
                     settings.javaScriptEnabled = true
                     loadUrl(url)
                     webViewInstance = this
@@ -106,6 +113,11 @@ fun WebViewScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
+        )
+
+        SettingBottomSheet(
+            show = showSheet,
+            onDismiss = { showSheet = false }
         )
     }
 }

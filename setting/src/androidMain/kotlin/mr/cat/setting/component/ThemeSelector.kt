@@ -27,7 +27,7 @@ fun ThemeSelector(
     themes: List<ThemeOption>,
     selectedId: String,
     onSelected: (ThemeOption) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     LazyColumn(
@@ -44,7 +44,7 @@ fun ThemeSelector(
                 isSelected = theme.id == selectedId,
                 onClick = {
                     onSelected(theme)
-                }
+                },
             )
         }
     }

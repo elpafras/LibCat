@@ -20,10 +20,11 @@ fun SettingBottomSheet(
             private val context = LocalContext.current.applicationContext
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val repository = SettingDataStoreRepository(createDataStore(context))
+                @Suppress("UNCHECKED_CAST")
                 return SettingViewModel(repository) as T
             }
-        }
-    )
+        },
+    ),
 ) {
     CollectionBottomSheet(
         show = show,

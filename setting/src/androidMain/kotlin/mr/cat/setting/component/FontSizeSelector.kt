@@ -15,46 +15,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import mr.cat.setting.component.model.FontSizeConfig
-import mr.cat.setting.component.model.FontSizeOption
+import mr.cat.setting.component.model.availableFontSizes
 
 @Composable
 fun FontSizeSelector(
-    selected: FontSizeOption,
-    onSelected: (FontSizeOption) -> Unit
+    selected: Float,
+    onSelected: (Float) -> Unit,
 ) {
-    val items = listOf(
-        FontSizeConfig(FontSizeOption.SMALL, "Kecil", 12.sp),
-        FontSizeConfig(FontSizeOption.STANDARD, "Standar", 14.sp),
-        FontSizeConfig(FontSizeOption.LARGE, "Besar", 18.sp)
-    )
-
     Row(modifier = Modifier.fillMaxWidth()) {
 
-        items.forEachIndexed { index, item ->
+        availableFontSizes.forEachIndexed { index, size ->
 
             val shape = when (index) {
                 0 -> RoundedCornerShape(
                     topStart = 12.dp,
-                    bottomStart = 12.dp
+                    bottomStart = 12.dp,
                 )
 
-                items.lastIndex -> RoundedCornerShape(
+                availableFontSizes.lastIndex -> RoundedCornerShape(
                     topEnd = 12.dp,
-                    bottomEnd = 12.dp
+                    bottomEnd = 12.dp,
                 )
 
                 else -> RoundedCornerShape(0.dp)
             }
 
             FontSizeItem(
-                text = item.label,
-                fontSize = item.fontSize,
-                isSelected = selected == item.option,
+                text = size.toInt().toString(),
+                fontSize = size.sp,
+                isSelected = selected == size,
                 shape = shape,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
-                onSelected(item.option)
+                onSelected(size)
             }
         }
     }
@@ -67,7 +60,7 @@ private fun FontSizeItem(
     isSelected: Boolean,
     shape: RoundedCornerShape,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     val backgroundColor = if (isSelected) {
         MaterialTheme.colorScheme.primary
@@ -87,12 +80,12 @@ private fun FontSizeItem(
             .clip(shape)
             .background(backgroundColor)
             .clickable { onClick() },
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = text,
             fontSize = fontSize,
-            color = textColor
+            color = textColor,
         )
     }
 }

@@ -2,24 +2,26 @@ package mr.cat.libcat.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mr.cat.libcat.ui.theme.LocalLibCatSettings
+import mr.cat.setting.SettingBottomSheet
 import mr.cat.setting.component.model.toFontFamily
-import mr.cat.setting.component.model.toTextUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleDetailScreen(onBack: () -> Unit) {
+    var showSheet by remember { mutableStateOf(value = false) }
     val setting = LocalLibCatSettings.current
     val themeColors = setting.theme.colors
     val fontFamily = setting.fontStyle.toFontFamily()
-    val fontSize = setting.fontSize.toTextUnit()
+    val fontSize = setting.fontSize.sp
 
     Scaffold(
         topBar = {
@@ -27,13 +29,18 @@ fun ArticleDetailScreen(onBack: () -> Unit) {
                 title = { Text("Article Detail", fontFamily = fontFamily, fontSize = fontSize) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = themeColors.topBarText)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = themeColors.topBarText)
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { showSheet = true }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings", tint = themeColors.topBarText)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = themeColors.topBar,
-                    titleContentColor = themeColors.topBarText
-                )
+                    titleContentColor = themeColors.topBarText,
+                ),
             )
         },
         containerColor = themeColors.background
@@ -58,16 +65,22 @@ fun ArticleDetailScreen(onBack: () -> Unit) {
                 color = themeColors.text
             )
         }
+
+        SettingBottomSheet(
+            show = showSheet,
+            onDismiss = { showSheet = false }
+        )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(onBack: () -> Unit) {
+    var showSheet by remember { mutableStateOf(value = false) }
     val setting = LocalLibCatSettings.current
     val themeColors = setting.theme.colors
     val fontFamily = setting.fontStyle.toFontFamily()
-    val fontSize = setting.fontSize.toTextUnit()
+    val fontSize = setting.fontSize.sp
 
     Scaffold(
         topBar = {
@@ -75,13 +88,18 @@ fun ProfileScreen(onBack: () -> Unit) {
                 title = { Text("Profile", fontFamily = fontFamily, fontSize = fontSize) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = themeColors.topBarText)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = themeColors.topBarText)
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { showSheet = true }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings", tint = themeColors.topBarText)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = themeColors.topBar,
-                    titleContentColor = themeColors.topBarText
-                )
+                    titleContentColor = themeColors.topBarText,
+                ),
             )
         },
         containerColor = themeColors.background
@@ -107,5 +125,10 @@ fun ProfileScreen(onBack: () -> Unit) {
                 color = themeColors.text.copy(alpha = 0.6f)
             )
         }
+
+        SettingBottomSheet(
+            show = showSheet,
+            onDismiss = { showSheet = false }
+        )
     }
 }

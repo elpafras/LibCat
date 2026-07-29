@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import mr.cat.setting.component.model.FontSizeOption
 import mr.cat.setting.component.FontSizeSelector
 import mr.cat.setting.component.FontStyleSelector
 import mr.cat.setting.component.ThemeSelector
@@ -23,14 +22,14 @@ import mr.cat.setting.component.model.defaultThemes
 @Composable
 fun CollectionBottomSheet(
     show: Boolean,
-    selected: FontSizeOption,
-    onSelected: (FontSizeOption) -> Unit,
+    selected: Float,
+    onSelected: (Float) -> Unit,
     selectedStyle: FontStyleOption,
     onStyleSelected: (FontStyleOption) -> Unit,
     selectedThemeId: String,
     onThemeSelected: (ThemeOption) -> Unit,
     themes: List<ThemeOption> = defaultThemes,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     if (show) {
         ModalBottomSheet(onDismissRequest = onDismiss) {
@@ -52,7 +51,7 @@ fun CollectionBottomSheet(
                 ThemeSelector(
                     themes = themes,
                     selectedId = selectedThemeId,
-                    onSelected = onThemeSelected
+                    onSelected = onThemeSelected,
                 )
             }
         }

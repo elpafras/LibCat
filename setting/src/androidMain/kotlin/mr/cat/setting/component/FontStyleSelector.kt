@@ -36,9 +36,9 @@ import mr.cat.setting.component.model.toFontFamily
 fun FontStyleSelector(
     selected: FontStyleOption,
     onSelected: (FontStyleOption) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(value = false) }
     val rotation by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f,
         label = "arrow_rotation"
@@ -68,6 +68,7 @@ fun FontStyleSelector(
                 Text(
                     text = selected.toLabel(),
                     fontFamily = selected.toFontFamily(),
+                    fontWeight = if (selected == FontStyleOption.MONTSERRAT) FontWeight.Bold else FontWeight.Normal,
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -103,13 +104,14 @@ fun FontStyleSelector(
                         text = {
                             Text(
                                 text = option.toLabel(),
-                                fontFamily = option.toFontFamily()
+                                fontFamily = option.toFontFamily(),
+                                fontWeight = if (option == FontStyleOption.MONTSERRAT) FontWeight.Bold else FontWeight.Normal
                             )
                         },
                         onClick = {
                             onSelected(option)
                             expanded = false
-                        }
+                        },
                     )
                 }
 

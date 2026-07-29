@@ -5,8 +5,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
-import mr.cat.setting.component.model.FontSizeOption
-import mr.cat.setting.component.model.toTextUnit
 import mr.cat.setting.utility.ThemeRegistry
 import mr.cat.setting.viewmodel.SettingViewModel
 
@@ -35,7 +33,7 @@ import mr.cat.setting.viewmodel.SettingViewModel
 @Composable
 fun LibCatTheme(
     viewModel: SettingViewModel,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val themeId by viewModel.themeId.collectAsState()
     val fontStyle by viewModel.fontStyle.collectAsState()
@@ -61,7 +59,7 @@ fun LibCatTheme(
             onSecondary = settingColors.onSecondary,
             outline = settingColors.outline,
             error = settingColors.error,
-            onError = settingColors.onError
+            onError = settingColors.onError,
         )
     }
 
@@ -72,7 +70,7 @@ fun LibCatTheme(
         fontFamily = loadFontFamily(fontStyle)
     }
 
-    val baseSize = fontSizeOption.toTextUnit().value
+    val baseSize = fontSizeOption
     
     val typography = remember(fontFamily, baseSize) {
         // Skala proporsional berdasarkan base fontSize (default 14sp)
@@ -93,7 +91,7 @@ fun LibCatTheme(
             bodySmall = TextStyle(fontFamily = fontFamily, fontSize = (12 * scale).sp),
             labelLarge = TextStyle(fontFamily = fontFamily, fontSize = (14 * scale).sp),
             labelMedium = TextStyle(fontFamily = fontFamily, fontSize = (12 * scale).sp),
-            labelSmall = TextStyle(fontFamily = fontFamily, fontSize = (11 * scale).sp)
+            labelSmall = TextStyle(fontFamily = fontFamily, fontSize = (11 * scale).sp),
         )
     }
 

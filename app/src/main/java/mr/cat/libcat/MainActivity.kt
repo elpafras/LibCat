@@ -1,10 +1,12 @@
 package mr.cat.libcat
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,6 +30,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val context = LocalContext.current
 
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
@@ -35,24 +38,28 @@ fun AppNavigation() {
                 onNavigateToDetail = { navController.navigate("detail") },
                 onNavigateToProfile = { navController.navigate("profile") },
                 onNavigateToShowcase = { navController.navigate("showcase") },
-                onNavigateToWebView = { url -> navController.navigate("webview?url=$url") }
+                onNavigateToWebView = { url -> navController.navigate("webview?url=$url") },
+                onNavigateToHebrewGreek = {
+                    val intent = Intent(context, HebrewGreekActivity::class.java)
+                    context.startActivity(intent)
+                }
             )
         }
         composable("detail") {
-            ArticleDetailScreen(onBack = { navController.popBackStack() })
+            ArticleDetailScreen { navController.popBackStack() }
         }
         composable("profile") {
-            ProfileScreen(onBack = { navController.popBackStack() })
+            ProfileScreen { navController.popBackStack() }
         }
         composable("showcase") {
-            SettingsShowcaseScreen(onBack = { navController.popBackStack() })
+            SettingsShowcaseScreen { navController.popBackStack() }
         }
         composable(
             route = "webview?url={url}",
-            arguments = listOf(navArgument("url") { type = NavType.StringType })
+            arguments = listOf(navArgument("url") { type = NavType.StringType }),
         ) { backStackEntry ->
             val url = backStackEntry.arguments?.getString("url") ?: "https://www.google.com"
-            WebViewScreen(url = url, onBack = { navController.popBackStack() })
+            WebViewScreen(url = url) { navController.popBackStack() }
         }
     }
 }

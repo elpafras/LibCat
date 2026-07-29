@@ -3,8 +3,8 @@ package mr.cat.setting.compose
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 import mr.cat.setting.component.model.FontStyleOption
-import mr.cat.setting.component.model.toTextUnit
 import mr.cat.setting.utility.SettingThemeColors
 import mr.cat.setting.utility.ThemeRegistry
 import mr.cat.setting.viewmodel.SettingViewModel
@@ -36,7 +36,7 @@ fun rememberSettingTextStyle(
 
     // 1. Resolve Font Size
     val fontSize = remember(fontSizeOption) {
-        fontSizeOption.toTextUnit()
+        fontSizeOption.sp
     }
 
     // 2. Resolve Font Family with Caching and Async Loading

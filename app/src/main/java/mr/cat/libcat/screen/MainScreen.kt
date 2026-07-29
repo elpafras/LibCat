@@ -1,6 +1,5 @@
 package mr.cat.libcat.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,7 +13,6 @@ import androidx.compose.ui.unit.sp
 import mr.cat.libcat.ui.theme.LocalLibCatSettings
 import mr.cat.setting.SettingBottomSheet
 import mr.cat.setting.component.model.toFontFamily
-import mr.cat.setting.component.model.toTextUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,13 +21,14 @@ fun MainScreen(
     onNavigateToProfile: () -> Unit,
     onNavigateToShowcase: () -> Unit,
     onNavigateToWebView: (String) -> Unit,
-    modifier: Modifier = Modifier
+    onNavigateToHebrewGreek: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    var showSheet by remember { mutableStateOf(false) }
+    var showSheet by remember { mutableStateOf(value = false) }
     val setting = LocalLibCatSettings.current
     val themeColors = setting.theme.colors
     val fontFamily = setting.fontStyle.toFontFamily()
-    val fontSize = setting.fontSize.toTextUnit()
+    val fontSize = setting.fontSize.sp
 
     Scaffold(
         topBar = {
@@ -42,8 +41,8 @@ fun MainScreen(
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = themeColors.topBar,
-                    titleContentColor = themeColors.topBarText
-                )
+                    titleContentColor = themeColors.topBarText,
+                ),
             )
         },
         containerColor = themeColors.background
@@ -94,6 +93,14 @@ fun MainScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = themeColors.topBar, contentColor = themeColors.topBarText)
             ) {
                 Text("Settings Showcase (Semua Komponen)", fontFamily = fontFamily)
+            }
+
+            Button(
+                onClick = onNavigateToHebrewGreek,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = themeColors.topBar, contentColor = themeColors.topBarText)
+            ) {
+                Text("Teks Ibrani & Yunani", fontFamily = fontFamily)
             }
 
             Button(

@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import mr.cat.setting.component.model.FontSizeOption
+import mr.cat.setting.component.model.DEFAULT_FONT_SIZE
 import mr.cat.setting.component.model.FontStyleOption
 import mr.cat.setting.component.model.ThemeOption
 import mr.cat.setting.component.model.defaultThemes
@@ -16,7 +16,7 @@ import mr.cat.setting.repository.SettingDataStoreRepository
 import mr.cat.setting.viewmodel.SettingViewModel
 
 data class SettingState(
-    val fontSize: FontSizeOption,
+    val fontSize: Float,
     val fontStyle: FontStyleOption,
     val theme: ThemeOption
 )

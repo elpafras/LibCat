@@ -10,7 +10,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import mr.cat.setting.component.model.toTextUnit
+import mr.cat.setting.component.model.FontStyleOption
 import mr.cat.setting.utility.FontInjector
 import mr.cat.setting.viewmodel.SettingViewModel
 import kotlin.time.Duration.Companion.milliseconds
@@ -45,11 +45,12 @@ class SettingManager(
                 ) { font, sizeOption, theme ->
                     Triple(font, sizeOption, theme)
                 }.debounce(150.milliseconds)
-                .collect { (font, sizeOption, theme) ->
+                .collect { (font, sizeValue, theme) ->
                     if (!isPageReady) return@collect
                     
-                    val size = sizeOption.toTextUnit().value
+                    val size = sizeValue
                     val safeTheme = theme.replace("'", "\\'")
+                    val weight = if (font == FontStyleOption.MONTSERRAT) "bold" else "normal"
                     
                     // Optimasi: Gunakan CSS Custom Properties pada root element untuk mengurangi reflow.
                     // Eksekusi semua perubahan gaya dalam satu batch JS call.
@@ -57,6 +58,7 @@ class SettingManager(
                         (function() {
                             var root = document.documentElement;
                             root.style.setProperty('--font-size', '${size}px');
+                            root.style.setProperty('--font-weight', '$weight');
                             root.setAttribute('data-theme', '$safeTheme');
                         })();
                     """.trimIndent()
@@ -91,14 +93,16 @@ class SettingManager(
      * Menerapkan semua pengaturan sekaligus (Initial Apply).
      */
     private fun applyAll(webView: WebView) {
-        val size = viewModel.fontSize.value.toTextUnit().value
+        val size = viewModel.fontSize.value
         val themeId = viewModel.themeId.value.replace("'", "\\'")
         val font = viewModel.fontStyle.value
+        val weight = if (font == FontStyleOption.MONTSERRAT) "bold" else "normal"
 
         val batchJs = """
             (function() {
                 var root = document.documentElement;
                 root.style.setProperty('--font-size', '${size}px');
+                root.style.setProperty('--font-weight', '$weight');
                 root.setAttribute('data-theme', '$themeId');
             })();
         """.trimIndent()

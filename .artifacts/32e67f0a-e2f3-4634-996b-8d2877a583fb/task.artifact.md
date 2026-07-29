@@ -1,0 +1,9 @@
+- [x] Create `HebrewGreekActivity.kt` with Hebrew and Greek text samples
+- [x] Register `HebrewGreekActivity` in `AndroidManifest.xml`
+- [x] Update `MainScreen.kt` to add navigation button
+- [x] Update `MainActivity.kt` to handle the Intent navigation
+- [x] Add settings button to `ArticleDetailScreen` and `ProfileScreen` in `DummyScreens.kt`
+- [x] Add settings button to `SettingsShowcaseScreen.kt`
+- [x] Add settings button to `WebViewScreen.kt`
+- [x] Add settings button to `HebrewGreekActivity.kt`
+- [x] Verify implementation across all screens

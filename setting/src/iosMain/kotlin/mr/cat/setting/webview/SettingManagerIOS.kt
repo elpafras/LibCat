@@ -3,7 +3,7 @@ package mr.cat.setting.webview
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
-import mr.cat.setting.component.model.toTextUnit
+import mr.cat.setting.component.model.FontStyleOption
 import mr.cat.setting.viewmodel.SettingViewModel
 import platform.WebKit.WKWebView
 import platform.darwin.dispatch_get_main_queue
@@ -33,16 +33,18 @@ class SettingManagerIOS(
             ) { font, sizeOption, theme ->
                 Triple(font, sizeOption, theme)
             }.debounce(150.milliseconds)
-            .collect { (font, sizeOption, theme) ->
+            .collect { (font, sizeValue, theme) ->
                 if (!isPageReady) return@collect
                 
-                val size = sizeOption.toTextUnit().value
+                val size = sizeValue
                 val safeTheme = theme.replace("'", "\\'")
+                val weight = if (font == FontStyleOption.MONTSERRAT) "bold" else "normal"
                 
                 val batchJs = """
                     (function() {
                         var root = document.documentElement;
                         root.style.setProperty('--font-size', '${size}px');
+                        root.style.setProperty('--font-weight', '$weight');
                         root.setAttribute('data-theme', '$safeTheme');
                     })();
                 """.trimIndent()
@@ -67,14 +69,16 @@ class SettingManagerIOS(
     }
 
     private fun applyAll(webView: WKWebView) {
-        val size = viewModel.fontSize.value.toTextUnit().value
+        val size = viewModel.fontSize.value
         val themeId = viewModel.themeId.value.replace("'", "\\'")
         val font = viewModel.fontStyle.value
+        val weight = if (font == FontStyleOption.MONTSERRAT) "bold" else "normal"
 
         val batchJs = """
             (function() {
                 var root = document.documentElement;
                 root.style.setProperty('--font-size', '${size}px');
+                root.style.setProperty('--font-weight', '$weight');
                 root.setAttribute('data-theme', '$themeId');
             })();
         """.trimIndent()

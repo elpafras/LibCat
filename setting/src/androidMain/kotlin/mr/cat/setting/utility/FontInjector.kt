@@ -46,13 +46,17 @@ class FontInjector(private val registry: FontRegistry) {
      */
     fun switchFont(webView: WebView, option: FontStyleOption) {
         val fontFamily = option.toFontName()
+        val fontWeight = if (option == FontStyleOption.MONTSERRAT) "bold" else "normal"
 
         // Lazy inject hanya untuk font ini
         injectFontFace(webView, option)
 
-        val js = "document.documentElement.style.setProperty('--font-family', '$fontFamily');"
+        val js = """
+            document.documentElement.style.setProperty('--font-family', '$fontFamily');
+            document.documentElement.style.setProperty('--font-weight', '$fontWeight');
+        """.trimIndent()
 
-        Log.d("FontInjector", "switchFont: $fontFamily")
+        Log.d("FontInjector", "switchFont: $fontFamily ($fontWeight)")
         webView.evaluateJavascript(js, null)
     }
 

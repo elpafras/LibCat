@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose)
     id("maven-publish")
@@ -10,8 +10,26 @@ group = project.findProperty("group") as? String ?: "com.github.elpafras"
 version = project.findProperty("version") as? String ?: "1.3.1"
 
 kotlin {
-    androidTarget {
-        publishLibraryVariants("release")
+    android {
+        namespace = "mr.cat.setting"
+        compileSdk = 37
+        minSdk = 26
+        
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
+
+        androidResources {
+            enable = true
+        }
+
+        withHostTest {
+            // isIncludeAndroidResources = true
+        }
+
+        withDeviceTest {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
     }
     
     listOf(
@@ -48,20 +66,6 @@ kotlin {
         iosMain.dependencies {
             // iOS specific dependencies if any
         }
-    }
-}
-
-android {
-    namespace = "mr.cat.setting"
-    compileSdk = 37
-
-    defaultConfig {
-        minSdk = 26
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 

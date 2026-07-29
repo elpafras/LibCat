@@ -1,0 +1,4 @@
+- [x] Set Montserrat as default font in Repository and ViewModel
+- [x] Make Montserrat bold in Android Compose implementation
+- [x] Support font weight in WebView injection
+- [x] Verify changes in Compose Preview and code structure

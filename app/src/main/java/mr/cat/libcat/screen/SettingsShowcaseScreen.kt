@@ -1,10 +1,9 @@
 package mr.cat.libcat.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -14,20 +13,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mr.cat.libcat.ui.theme.LocalLibCatSettings
+import mr.cat.setting.SettingBottomSheet
 import mr.cat.setting.component.model.toFontFamily
-import mr.cat.setting.component.model.toTextUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsShowcaseScreen(
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     val setting = LocalLibCatSettings.current
     val themeColors = setting.theme.colors
     val fontFamily = setting.fontStyle.toFontFamily()
-    val fontSize = setting.fontSize.toTextUnit()
+    val fontSize = setting.fontSize.sp
 
-    var showDialog by remember { mutableStateOf(false) }
+    var showSheet by remember { mutableStateOf(value = false) }
+    var showDialog by remember { mutableStateOf(value = false) }
     var searchText by remember { mutableStateOf("") }
 
     Scaffold(
@@ -37,12 +37,17 @@ fun SettingsShowcaseScreen(
                     Text(
                         "Settings Showcase", 
                         fontFamily = fontFamily,
-                        fontSize = fontSize
+                        fontSize = fontSize,
                     ) 
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = themeColors.topBarText)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = themeColors.topBarText)
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { showSheet = true }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Settings", tint = themeColors.topBarText)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -197,7 +202,7 @@ fun SettingsShowcaseScreen(
                         colors = ButtonDefaults.outlinedButtonColors(
                             contentColor = themeColors.text
                         ),
-                        border = ButtonDefaults.outlinedButtonBorder.copy(brush = androidx.compose.ui.graphics.SolidColor(themeColors.text))
+                        border = ButtonDefaults.outlinedButtonBorder(enabled = true).copy(brush = androidx.compose.ui.graphics.SolidColor(themeColors.text))
                     ) {
                         Text("Outlined", fontFamily = fontFamily)
                     }
@@ -249,6 +254,11 @@ fun SettingsShowcaseScreen(
                 HorizontalDivider(color = themeColors.text.copy(alpha = 0.1f))
             }
         }
+
+        SettingBottomSheet(
+            show = showSheet,
+            onDismiss = { showSheet = false }
+        )
     }
 
     if (showDialog) {
