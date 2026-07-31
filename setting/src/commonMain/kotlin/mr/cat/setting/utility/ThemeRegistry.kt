@@ -28,6 +28,7 @@ data class SettingThemeColors(
     val outline: Color,
     val error: Color,
     val onError: Color,
+    val highlight: Color,
     val isDark: Boolean
 )
 
@@ -46,6 +47,20 @@ object ThemeRegistry {
         val brightest = max(lum1, lum2)
         val darkest = min(lum1, lum2)
         return (brightest + 0.05) / (darkest + 0.05)
+    }
+
+    /**
+     * Memastikan warna foreground memiliki kontras yang cukup terhadap background.
+     * Jika rasio kontras di bawah ambang batas (default 4.5), kembalikan Hitam atau Putih.
+     */
+    fun ensureContrast(foreground: Color, background: Color, threshold: Double = 4.5): Color {
+        val currentRatio = calculateContrastRatio(foreground, background)
+        if (currentRatio >= threshold) return foreground
+
+        val whiteRatio = calculateContrastRatio(Color.White, background)
+        val blackRatio = calculateContrastRatio(Color.Black, background)
+
+        return if (whiteRatio > blackRatio) Color.White else Color.Black
     }
 
     /**
@@ -82,84 +97,93 @@ object ThemeRegistry {
         val colors = themeOption.colors
         val isDark = colors.isDark
 
+        val bg = colors.background
+        val txt = ensureContrast(colors.text, bg)
+        val tb = colors.topBar
+        val tbt = ensureContrast(colors.topBarText, tb)
+
         return when (themeOption.id) {
             "default" -> SettingThemeColors(
-                background = colors.background,
-                onBackground = colors.text,
-                surface = colors.background,
-                onSurface = colors.text,
+                background = bg,
+                onBackground = txt,
+                surface = bg,
+                onSurface = txt,
                 surfaceContainer = Color(0xFFE2E4E9), // Light grayish indigo
-                onSurfaceContainer = colors.text,
+                onSurfaceContainer = txt,
                 surfaceVariant = Color(0xFFDEE1E9),
-                onSurfaceVariant = colors.text.copy(alpha = 0.8f),
-                primary = colors.topBar,
-                onPrimary = colors.topBarText,
-                primaryContainer = colors.topBar.copy(alpha = 0.12f),
-                onPrimaryContainer = colors.topBar,
-                outline = colors.text.copy(alpha = 0.12f),
+                onSurfaceVariant = txt.copy(alpha = 0.8f),
+                primary = tb,
+                onPrimary = tbt,
+                primaryContainer = tb.copy(alpha = 0.12f),
+                onPrimaryContainer = tb,
+                outline = txt.copy(alpha = 0.12f),
                 error = Color(0xFFB00020),
                 onError = Color.White,
+                highlight = Color(0xFFFFE082), // Amber 200
                 isDark = isDark
             )
             "hvs" -> SettingThemeColors(
-                background = colors.background,
-                onBackground = colors.text,
-                surface = colors.background,
-                onSurface = colors.text,
+                background = bg,
+                onBackground = txt,
+                surface = bg,
+                onSurface = txt,
                 surfaceContainer = Color(0xFFF2F2F2),
-                onSurfaceContainer = colors.text,
+                onSurfaceContainer = txt,
                 surfaceVariant = Color(0xFFEBEBEB),
-                onSurfaceVariant = colors.text.copy(alpha = 0.8f),
-                primary = colors.topBar,
-                onPrimary = colors.topBarText,
+                onSurfaceVariant = txt.copy(alpha = 0.8f),
+                primary = tb,
+                onPrimary = tbt,
                 primaryContainer = Color(0xFFE0E0E0),
-                onPrimaryContainer = colors.topBar,
+                onPrimaryContainer = tb,
                 outline = Color(0xFFCCCCCC),
                 error = Color(0xFFB00020),
                 onError = Color.White,
+                highlight = Color(0xFFFFF176), // Yellow 300
                 isDark = isDark
             )
             "papan_tulis" -> SettingThemeColors(
-                background = colors.background,
-                onBackground = colors.text,
-                surface = colors.background,
-                onSurface = colors.text,
+                background = bg,
+                onBackground = txt,
+                surface = bg,
+                onSurface = txt,
                 surfaceContainer = Color(0xFF252525),
-                onSurfaceContainer = colors.text,
+                onSurfaceContainer = txt,
                 surfaceVariant = Color(0xFF333333),
-                onSurfaceVariant = colors.text.copy(alpha = 0.8f),
-                primary = colors.topBar,
-                onPrimary = colors.topBarText,
+                onSurfaceVariant = txt.copy(alpha = 0.8f),
+                primary = tb,
+                onPrimary = tbt,
                 primaryContainer = Color(0xFF404040),
-                onPrimaryContainer = colors.text,
-                outline = colors.text.copy(alpha = 0.2f),
+                onPrimaryContainer = txt,
+                outline = txt.copy(alpha = 0.2f),
                 error = Color(0xFFCF6679),
                 onError = Color.Black,
+                highlight = Color(0xFFFFD54F).copy(alpha = 0.4f),
                 isDark = isDark
             )
             else -> {
                 val (sc, osc) = if (isDark) {
-                    Color(0xFF2C2C2C) to colors.text
+                    Color(0xFF2C2C2C) to txt
                 } else {
-                    Color(0xFFF5F5F5) to colors.text
+                    Color(0xFFF5F5F5) to txt
                 }
 
                 SettingThemeColors(
-                    background = colors.background,
-                    onBackground = colors.text,
-                    surface = colors.background,
-                    onSurface = colors.text,
+                    background = bg,
+                    onBackground = txt,
+                    surface = bg,
+                    onSurface = txt,
                     surfaceContainer = sc,
                     onSurfaceContainer = osc,
                     surfaceVariant = sc.copy(alpha = 0.8f),
                     onSurfaceVariant = osc.copy(alpha = 0.7f),
-                    primary = colors.topBar,
-                    onPrimary = colors.topBarText,
-                    primaryContainer = colors.topBar.copy(alpha = 0.2f),
-                    onPrimaryContainer = if (isDark) colors.text else colors.topBar,
-                    outline = colors.text.copy(alpha = 0.3f),
+                    primary = tb,
+                    onPrimary = tbt,
+                    primaryContainer = tb.copy(alpha = 0.2f),
+                    onPrimaryContainer = if (isDark) txt else tb,
+                    outline = txt.copy(alpha = 0.3f),
                     error = if (isDark) Color(0xFFCF6679) else Color(0xFFB00020),
                     onError = if (isDark) Color.Black else Color.White,
+                    highlight = if (isDark) tb.copy(alpha = 0.4f) else tb.copy(alpha = 0.2f),
                     isDark = isDark
                 )
             }

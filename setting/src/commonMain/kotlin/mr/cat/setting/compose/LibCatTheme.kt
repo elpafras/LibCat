@@ -84,6 +84,7 @@ fun LibCatTheme(
             surfaceContainerLowest = settingColors.surfaceContainer,
             surfaceContainerHighest = settingColors.surfaceContainer,
             outline = settingColors.outline,
+            secondaryContainer = settingColors.highlight,
             error = settingColors.error,
             onError = settingColors.onError,
         )

@@ -93,8 +93,8 @@ val defaultThemes = listOf(
         label = "Kuning Pastel",
         background = 0xFFFED68B,
         text = 0xFF000000,
-        topBar = 0xFFFED68B,
-        topBarText = 0xFFFDD68B,
+        topBar = 0xFFF9A825,
+        topBarText = 0xFF000000,
         isDark = false
     ),
 
