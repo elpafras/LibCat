@@ -9,7 +9,6 @@ actual fun FontStyleOption.toFontFamily(): FontFamily? {
     val resId = when (this) {
         FontStyleOption.DEFAULT -> null
         FontStyleOption.OPEN_SANS -> R.font.opensans
-        FontStyleOption.MONTSERRAT -> R.font.montserrat
         FontStyleOption.NOTO_SANS -> R.font.notosans
         FontStyleOption.DM_SANS -> R.font.dmsans
         FontStyleOption.ARIMO -> R.font.arimo

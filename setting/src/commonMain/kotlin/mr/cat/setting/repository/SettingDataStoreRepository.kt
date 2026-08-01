@@ -44,12 +44,12 @@ class SettingDataStoreRepository(
         val value = prefs.asMap().entries.find { it.key.name == KEY_FONT_STYLE.name }?.value
         val stringValue = when (value) {
             is String -> value
-            else -> FontStyleOption.MONTSERRAT.name
+            else -> FontStyleOption.DEFAULT.name
         }
         try {
             FontStyleOption.valueOf(stringValue)
         } catch (_: IllegalArgumentException) {
-            FontStyleOption.MONTSERRAT
+            FontStyleOption.DEFAULT
         }
     }
 

@@ -38,7 +38,7 @@ class SettingManagerIOS(
                 
                 val size = sizeValue
                 val safeTheme = theme.replace("'", "\\'")
-                val weight = if (font == FontStyleOption.MONTSERRAT) "bold" else "normal"
+                val weight = "normal"
                 
                 val batchJs = """
                     (function() {
@@ -72,7 +72,7 @@ class SettingManagerIOS(
         val size = viewModel.fontSize.value
         val themeId = viewModel.themeId.value.replace("'", "\\'")
         val font = viewModel.fontStyle.value
-        val weight = if (font == FontStyleOption.MONTSERRAT) "bold" else "normal"
+        val weight = "normal"
 
         val batchJs = """
             (function() {

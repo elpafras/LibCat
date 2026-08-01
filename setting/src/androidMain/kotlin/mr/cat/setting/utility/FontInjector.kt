@@ -46,7 +46,7 @@ class FontInjector(private val registry: FontRegistry) {
      */
     fun switchFont(webView: WebView, option: FontStyleOption) {
         val fontFamily = option.toFontName()
-        val fontWeight = if (option == FontStyleOption.MONTSERRAT) "bold" else "normal"
+        val fontWeight = "normal"
 
         // Lazy inject hanya untuk font ini
         injectFontFace(webView, option)

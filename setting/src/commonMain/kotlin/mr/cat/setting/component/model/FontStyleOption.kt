@@ -21,7 +21,6 @@ enum class FontStyleOption(
     ),
 
     OPEN_SANS(FontCategory.MODERN, "opensans", "Open Sans"),
-    MONTSERRAT(FontCategory.MODERN, "montserrat", "Montserrat"),
     NOTO_SANS(FontCategory.MODERN, "notosans", "Noto Sans"),
     DM_SANS(FontCategory.MODERN, "dmsans", "DM Sans"),
     ARIMO(FontCategory.MODERN, "arimo", "Arimo"),

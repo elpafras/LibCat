@@ -68,7 +68,7 @@ fun FontStyleSelector(
                 Text(
                     text = selected.toLabel(),
                     fontFamily = selected.toFontFamily(),
-                    fontWeight = if (selected == FontStyleOption.MONTSERRAT) FontWeight.Bold else FontWeight.Normal,
+                    fontWeight = FontWeight.Normal,
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -105,7 +105,7 @@ fun FontStyleSelector(
                             Text(
                                 text = option.toLabel(),
                                 fontFamily = option.toFontFamily(),
-                                fontWeight = if (option == FontStyleOption.MONTSERRAT) FontWeight.Bold else FontWeight.Normal
+                                fontWeight = FontWeight.Normal
                             )
                         },
                         onClick = {

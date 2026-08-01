@@ -32,7 +32,7 @@ fun LibCatTheme(
     val themeId = settings.theme.id
     val fontFamily = settings.fontStyle.toFontFamily()
     val fontSize = settings.fontSize.sp
-    val fontWeight = if (settings.fontStyle == FontStyleOption.MONTSERRAT) FontWeight.Bold else FontWeight.Normal
+    val fontWeight = FontWeight.Normal
 
     val settingColors = remember(themeId) {
         ThemeRegistry.resolveThemeColors(themeId)

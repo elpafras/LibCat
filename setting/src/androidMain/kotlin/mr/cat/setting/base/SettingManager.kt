@@ -10,7 +10,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import mr.cat.setting.component.model.FontStyleOption
 import mr.cat.setting.utility.FontInjector
 import mr.cat.setting.viewmodel.SettingViewModel
 import kotlin.time.Duration.Companion.milliseconds
@@ -50,7 +49,7 @@ class SettingManager(
                     
                     val size = sizeValue
                     val safeTheme = theme.replace("'", "\\'")
-                    val weight = if (font == FontStyleOption.MONTSERRAT) "bold" else "normal"
+                    val weight = "normal"
                     
                     // Optimasi: Gunakan CSS Custom Properties pada root element untuk mengurangi reflow.
                     // Eksekusi semua perubahan gaya dalam satu batch JS call.
@@ -96,7 +95,7 @@ class SettingManager(
         val size = viewModel.fontSize.value
         val themeId = viewModel.themeId.value.replace("'", "\\'")
         val font = viewModel.fontStyle.value
-        val weight = if (font == FontStyleOption.MONTSERRAT) "bold" else "normal"
+        val weight = "normal"
 
         val batchJs = """
             (function() {

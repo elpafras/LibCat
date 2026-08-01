@@ -42,7 +42,7 @@ class FontInjectorIOS(private val registry: FontRegistry) {
      */
     fun switchFont(webView: WKWebView, option: FontStyleOption) {
         val fontFamily = option.toFontName()
-        val fontWeight = if (option == FontStyleOption.MONTSERRAT) "bold" else "normal"
+        val fontWeight = "normal"
         injectFontFace(webView, option)
 
         val js = """

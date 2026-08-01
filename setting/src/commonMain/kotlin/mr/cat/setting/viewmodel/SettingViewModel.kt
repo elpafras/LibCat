@@ -26,7 +26,7 @@ class SettingViewModel(
     val fontStyle = repository.fontStyleFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = FontStyleOption.MONTSERRAT,
+        initialValue = FontStyleOption.DEFAULT,
     )
 
     val themeId = repository.themeIdFlow.stateIn(
