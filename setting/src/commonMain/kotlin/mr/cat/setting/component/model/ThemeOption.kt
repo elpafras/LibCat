@@ -36,6 +36,8 @@ private fun theme(
     )
 )
 
+const val DEFAULT_THEME_ID = "default"
+
 val defaultThemes = listOf(
 
     theme(

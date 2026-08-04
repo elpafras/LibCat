@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import mr.cat.setting.component.model.DEFAULT_FONT_SIZE
+import mr.cat.setting.component.model.DEFAULT_THEME_ID
 import mr.cat.setting.component.model.FontStyleOption
 import mr.cat.setting.repository.SettingRepository
 
@@ -32,7 +33,7 @@ class SettingViewModel(
     val themeId = repository.themeIdFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = "default",
+        initialValue = DEFAULT_THEME_ID,
     )
 
     fun setFontSize(size: Float) = viewModelScope.launch {

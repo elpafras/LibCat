@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import mr.cat.setting.component.model.DEFAULT_FONT_SIZE
+import mr.cat.setting.component.model.DEFAULT_THEME_ID
 import mr.cat.setting.component.model.FontStyleOption
 
 /**
@@ -63,7 +64,7 @@ class SettingDataStoreRepository(
         val value = prefs.asMap().entries.find { it.key.name == KEY_THEME_ID.name }?.value
         when (value) {
             is String -> value
-            else -> "hvs"
+            else -> DEFAULT_THEME_ID
         }
     }
 
