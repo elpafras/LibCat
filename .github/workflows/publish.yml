@@ -11,16 +11,16 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-          
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-        
+
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v4
 
@@ -32,8 +32,15 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
+          # Menggunakan nama property standar plugin vanniktech: signing.key dan signing.password
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
         run: |
+          # Decode Base64 key jika tersimpan sebagai base64 (sangat disarankan)
+          # Jika Anda tidak men-base64-kan secret, hapus blok 'if' di bawah ini.
+          if [[ "${ORG_GRADLE_PROJECT_signingKey}" != *"BEGIN PGP"* ]]; then
+            export ORG_GRADLE_PROJECT_signingKey=$(echo $ORG_GRADLE_PROJECT_signingKey | base64 --decode)
+          fi
+
           ./gradlew :setting:publishAllPublicationsToMavenCentralRepository --no-configuration-cache \
             -Pversion=${{ steps.version.outputs.version }}
