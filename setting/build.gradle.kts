@@ -3,56 +3,39 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose)
-    id("maven-publish")
+    id("com.vanniktech.maven.publish") version "0.37.0"
 }
 
-group = project.findProperty("group") as? String ?: "com.github.elpafras"
-version = project.findProperty("version") as? String ?: "1.3.1"
+group = "io.github.elpafras"
+version = project.findProperty("version") as? String ?: "1.4.0"
 
 kotlin {
-    android {
-        namespace = "mr.cat.setting"
-        compileSdk = 37
-        minSdk = 26
-        
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-        }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-        androidResources {
-            enable = true
-        }
-
-        withHostTest {
-            // isIncludeAndroidResources = true
-        }
-
-        withDeviceTest {
-            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
-    }
-    
     listOf(
+        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "LibCatSetting"
+            baseName = "LibCat"
             isStatic = true
         }
     }
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.components.resources)
+            implementation(libs.compose.components.ui.tooling.preview)
             
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.viewmodel.compose)
-            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.lifecycle.runtime.compose)
             implementation(libs.androidx.datastore.preferences.core)
             implementation(libs.okio)
         }
@@ -67,7 +50,60 @@ kotlin {
             // iOS specific dependencies if any
         }
     }
+
+    android {
+        namespace = "mr.cat.setting"
+        compileSdk = 37
+        minSdk = 26
+        
+        androidResources {
+            enable = true
+        }
+        
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
+    }
 }
 
-// KMP plugin will automatically create publications for all targets.
-// We only need to configure them if we need custom metadata.
+mavenPublishing {
+    coordinates("io.github.elpafras", "libcat", version.toString())
+    
+    publishToMavenCentral()
+    signAllPublications()
+    
+    pom {
+        name.set("LibCat")
+        description.set(
+            "Kotlin Multiplatform library untuk manajemen tema (font, " +
+            "ukuran font, color scheme) yang tersinkronisasi secara " +
+            "reaktif ke UI native Compose Multiplatform dan konten " +
+            "WebView, berjalan di Android dan iOS."
+        )
+        url.set("https://github.com/elpafras/LibCat")
+        
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+                // Menggunakan distribution.set jika tersedia, atau lewatkan jika terjadi konflik resolusi
+            }
+        }
+        
+        developers {
+            developer {
+                id.set("elpafras")
+                name.set("Dri Handoko")
+                url.set("https://github.com/elpafras")
+            }
+        }
+        
+        scm {
+            url.set("https://github.com/elpafras/LibCat")
+            connection.set("scm:git:git://github.com/elpafras/LibCat.git")
+            developerConnection.set(
+                "scm:git:ssh://git@github.com/elpafras/LibCat.git"
+            )
+        }
+    }
+}

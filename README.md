@@ -28,11 +28,13 @@ Tambahkan dependency ke modul `commonMain` di `build.gradle.kts` project Anda:
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.github.elpafras:LibCat:{version}") // Ganti dengan versi terbaru
+            implementation("io.github.elpafras:libcat:1.4.0")
         }
     }
 }
 ```
+
+> **Note:** Tidak diperlukan kredensial khusus untuk instalasi ini karena sudah dipublikasikan di Maven Central.
 
 **Requirements:**
 - Kotlin 2.4.10+

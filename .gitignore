@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Signing keys
+*.asc
+*.gpg
+private_key*

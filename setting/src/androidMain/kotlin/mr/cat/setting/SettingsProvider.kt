@@ -7,7 +7,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import mr.cat.setting.component.model.DEFAULT_FONT_SIZE
 import mr.cat.setting.component.model.FontStyleOption
 import mr.cat.setting.component.model.ThemeOption
 import mr.cat.setting.component.model.defaultThemes
@@ -31,9 +30,13 @@ fun rememberSettingState(
         factory = object : ViewModelProvider.Factory {
             private val context = LocalContext.current.applicationContext
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                // Inisialisasi repository dengan DataStore spesifik Android
-                val repository = SettingDataStoreRepository(createDataStore(context))
-                return SettingViewModel(repository) as T
+                if (modelClass.isAssignableFrom(SettingViewModel::class.java)) {
+                    // Inisialisasi repository dengan DataStore spesifik Android
+                    val repository = SettingDataStoreRepository(createDataStore(context))
+                    @Suppress("UNCHECKED_CAST")
+                    return SettingViewModel(repository) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
         }
     )
