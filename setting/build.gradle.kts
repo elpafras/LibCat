@@ -108,10 +108,3 @@ mavenPublishing {
         }
     }
 }
-
-
-signing {
-    // Menggunakan binary GPG sistem (gpg command) untuk menghindari masalah parsing
-    // private key in-memory (Bouncy Castle) pada format GnuPG modern (AEAD/OCB).
-    useGpgCmd()
-}

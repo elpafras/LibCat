@@ -24,28 +24,6 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v4
 
-      - name: Verify GPG installed
-        run: gpg --version
-
-      - name: Import GPG key
-        env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-        run: |
-          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
-
-      - name: Get GPG key ID
-        id: gpg_key_id
-        run: |
-          KEY_ID=$(gpg --list-secret-keys --keyid-format=long | grep sec | head -n1 | awk '{print $2}' | cut -d'/' -f2)
-          echo "key_id=$KEY_ID" >> "$GITHUB_OUTPUT"
-
-      - name: Configure GPG for non-interactive use
-        run: |
-          mkdir -p ~/.gnupg
-          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
-          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
-          gpgconf --kill gpg-agent
-
       - name: Extract version from tag
         id: version
         run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
@@ -54,9 +32,9 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           ./gradlew :setting:publishAllPublicationsToMavenCentralRepository \
             --no-configuration-cache \
-            -Pversion=${{ steps.version.outputs.version }} \
-            -Psigning.gnupg.keyName=${{ steps.gpg_key_id.outputs.key_id }} \
-            -Psigning.gnupg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+            -Pversion=${{ steps.version.outputs.version }}
