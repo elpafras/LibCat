@@ -22,19 +22,32 @@ LibCat menyelesaikan masalah ini dengan:
 
 ## 📦 Instalasi
 
-Tambahkan dependency ke modul `commonMain` di `build.gradle.kts` project Anda:
+1. Tambahkan repository GitHub Pages LibCat ke `settings.gradle.kts` project Anda:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://elpafras.github.io/LibCat/repo") }
+    }
+}
+```
+
+2. Tambahkan dependency ke modul `commonMain` di `build.gradle.kts` project Anda:
 
 ```kotlin
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.elpafras:libcat:1.4.0")
+            implementation("io.github.elpafras:libcat:2.1.0")
         }
     }
 }
 ```
 
-> **Note:** Tidak diperlukan kredensial khusus untuk instalasi ini karena sudah dipublikasikan di Maven Central.
+> [!NOTE]
+> Mulai versi 2.1.0, LibCat dipublikasikan via self-hosted Maven repository di GitHub Pages. Tidak diperlukan token, autentikasi, atau GPG signing untuk mengonsumsi library ini.
 
 **Requirements:**
 - Kotlin 2.4.10+
@@ -204,3 +217,8 @@ Kami menerima kontribusi dalam bentuk Issue Report maupun Pull Request. Silakan 
 MIT License. Copyright (c) 2026 LibCat Team.
 
 Lihat file [LICENSE](LICENSE) untuk detail lengkap.
+
+---
+
+> [!IMPORTANT]
+> **Catatan Maintainer:** Pastikan fitur GitHub Pages sudah diaktifkan secara manual di pengaturan repositori (**Settings > Pages > Build and deployment > Source: Deploy from branch > Branch: gh-pages / repo**) sebelum menjalankan workflow publish untuk pertama kali.

@@ -3,12 +3,11 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose)
-    id("com.vanniktech.maven.publish") version "0.37.0"
-    id("signing")
+    id("maven-publish")
 }
 
 group = "io.github.elpafras"
-version = project.findProperty("version") as? String ?: "2.0.0"
+version = project.findProperty("version") as? String ?: "2.1.0"
 
 kotlin {
     iosX64()
@@ -67,44 +66,37 @@ kotlin {
     }
 }
 
-mavenPublishing {
-    coordinates("io.github.elpafras", "libcat", version.toString())
-    
-    publishToMavenCentral()
-    signAllPublications()
-    
-    pom {
-        name.set("LibCat")
-        description.set(
-            "Kotlin Multiplatform library untuk manajemen tema (font, " +
-            "ukuran font, color scheme) yang tersinkronisasi secara " +
-            "reaktif ke UI native Compose Multiplatform dan konten " +
-            "WebView, berjalan di Android dan iOS."
-        )
-        url.set("https://github.com/elpafras/LibCat")
-        
-        licenses {
-            license {
-                name.set("MIT License")
-                url.set("https://opensource.org/licenses/MIT")
-                // Menggunakan distribution.set jika tersedia, atau lewatkan jika terjadi konflik resolusi
+publishing {
+    publications {
+        withType<MavenPublication> {
+            pom {
+                name.set("LibCat")
+                description.set(
+                    "Kotlin Multiplatform library untuk manajemen tema " +
+                    "(font, ukuran font, color scheme) yang tersinkronisasi " +
+                    "ke UI native Compose Multiplatform dan WebView, " +
+                    "Android & iOS."
+                )
+                url.set("https://github.com/elpafras/LibCat")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("elpafras")
+                        name.set("Dri Handoko")
+                    }
+                }
             }
         }
-        
-        developers {
-            developer {
-                id.set("elpafras")
-                name.set("Dri Handoko")
-                url.set("https://github.com/elpafras")
-            }
-        }
-        
-        scm {
-            url.set("https://github.com/elpafras/LibCat")
-            connection.set("scm:git:git://github.com/elpafras/LibCat.git")
-            developerConnection.set(
-                "scm:git:ssh://git@github.com/elpafras/LibCat.git"
-            )
+    }
+    repositories {
+        maven {
+            name = "LocalRepo"
+            url = uri(layout.buildDirectory.dir("repo"))
         }
     }
 }

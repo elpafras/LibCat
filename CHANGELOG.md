@@ -1,29 +1,30 @@
 # Changelog
 
-Semua perubahan penting pada proyek ini akan dicatat dalam file ini.
+All notable changes to this project will be documented in this file.
 
-## [1.4.0] - 2026-08-07
-
-### Added
-- Konfigurasi untuk publikasi ke **Maven Central** menggunakan `com.vanniktech.maven.publish`.
-- Dukungan target iOS baru: `iosX64`.
-- Workflow GitHub Actions untuk otomatisasi publikasi.
-
+## [2.1.0] - 2026-08-11
 ### Changed
-- **Breaking Change**: Group ID diubah dari `com.github.elpafras` menjadi `io.github.elpafras`.
-- **Breaking Change**: Artifact ID diubah menjadi lowercase `libcat`.
-- Update versi ke `1.4.0`.
+- Moved library distribution from Maven Central to a self-hosted Maven repository on GitHub Pages.
+- Simplified the publishing process by removing GPG signing and Sonatype authentication.
+- Repository URL is now `https://elpafras.github.io/LibCat/repo`.
 
-### Migration Guide
-Untuk bermigrasi dari JitPack ke Maven Central:
-1. Ubah dependency di `build.gradle.kts`:
-   ```kotlin
-   implementation("io.github.elpafras:libcat:1.4.0")
-   ```
-2. Hapus repository JitPack jika tidak lagi dibutuhkan:
-   ```kotlin
-   repositories {
-       mavenCentral()
-       // remove maven("https://jitpack.io")
-   }
-   ```
+### Removed
+- `com.vanniktech.maven.publish` plugin.
+- GPG signing configuration.
+
+## [2.0.0] - 2026-08-07
+### Added
+- Standardized Version Catalog (`libs.versions.toml`) for all dependencies.
+- Full support for Kotlin 2.4.10 and Compose Multiplatform 1.11.1.
+- Modernized `SystemBarsController` for Android 15 (edge-to-edge support).
+
+### Fixed
+- Dependency resolution conflicts for iOS targets.
+- Unchecked cast warnings in `SettingsProvider`.
+- Deprecated system bar color APIs.
+
+## [1.4.0] - 2026-06-15
+### Initial Release
+- Core theme management (font, size, color).
+- Sync between Native Compose and WebView.
+- Android and iOS support.
