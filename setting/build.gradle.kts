@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.elpafras"
-version = project.findProperty("version") as? String ?: "1.4.0"
+version = project.findProperty("version") as? String ?: "2.0.0"
 
 kotlin {
     iosX64()

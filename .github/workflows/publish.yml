@@ -32,19 +32,9 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SONATYPE_PASSWORD }}
-          # Rahasia GPG dipetakan ke variabel sementara untuk di-decode
-          GPG_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          GPG_PASSWORD: ${{ secrets.GPG_PASSPHRASE }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          # 1. Decode Base64 key jika tersimpan sebagai base64
-          if [[ "${GPG_KEY}" != *"BEGIN PGP"* ]]; then
-            GPG_KEY=$(echo $GPG_KEY | base64 --decode)
-          fi
-          
-          # 2. Map ke environment variable yang dipahami Gradle sebagai property 'signing.key' dan 'signing.password'
-          # Penggunaan double underscore (__) memetakan ke titik (.) pada property name
-          export ORG_GRADLE_PROJECT_signing__key="$GPG_KEY"
-          export ORG_GRADLE_PROJECT_signing__password="$GPG_PASSWORD"
-
-          ./gradlew :setting:publishAllPublicationsToMavenCentralRepository --no-configuration-cache \
+          ./gradlew :setting:publishAllPublicationsToMavenCentralRepository \
+            --no-configuration-cache \
             -Pversion=${{ steps.version.outputs.version }}
