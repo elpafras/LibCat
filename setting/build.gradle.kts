@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose)
     id("com.vanniktech.maven.publish") version "0.37.0"
+    id("signing")
 }
 
 group = "io.github.elpafras"
@@ -64,6 +65,12 @@ kotlin {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
     }
+}
+
+signing {
+    // Menggunakan binary GPG sistem (gpg command) untuk menghindari masalah parsing
+    // private key in-memory (Bouncy Castle) pada format GnuPG modern (AEAD/OCB).
+    useGpgCmd()
 }
 
 mavenPublishing {
