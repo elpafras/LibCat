@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- This module was also published with a richer model, Gradle metadata,  -->
+  <!-- which should be used instead. Do not delete the following line which  -->
+  <!-- is to indicate to Gradle or any Gradle module metadata file consumer  -->
+  <!-- that they should prefer consuming it instead. -->
+  <!-- do_not_remove: published-with-gradle-metadata -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.github.elpafras</groupId>
+  <artifactId>setting-android</artifactId>
+  <version>2.0.0</version>
+  <packaging>aar</packaging>
+  <name>LibCat</name>
+  <description>Kotlin Multiplatform library untuk manajemen tema (font, ukuran font, color scheme) yang tersinkronisasi ke UI native Compose Multiplatform dan WebView, Android &amp; iOS.</description>
+  <url>https://github.com/elpafras/LibCat</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>elpafras</id>
+      <name>Dri Handoko</name>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib</artifactId>
+      <version>2.4.10</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>androidx.core</groupId>
+      <artifactId>core-ktx</artifactId>
+      <version>1.19.0</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>androidx.appcompat</groupId>
+      <artifactId>appcompat</artifactId>
+      <version>1.7.1</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.android.material</groupId>
+      <artifactId>material</artifactId>
+      <version>1.14.0</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.compose.runtime</groupId>
+      <artifactId>runtime</artifactId>
+      <version>1.7.3</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.compose.foundation</groupId>
+      <artifactId>foundation</artifactId>
+      <version>1.7.3</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.compose.material3</groupId>
+      <artifactId>material3</artifactId>
+      <version>1.7.3</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.compose.components</groupId>
+      <artifactId>components-resources-android</artifactId>
+      <version>1.7.3</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.compose.components</groupId>
+      <artifactId>components-ui-tooling-preview-android</artifactId>
+      <version>1.7.3</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.androidx.lifecycle</groupId>
+      <artifactId>lifecycle-viewmodel</artifactId>
+      <version>2.8.2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.androidx.lifecycle</groupId>
+      <artifactId>lifecycle-viewmodel-compose</artifactId>
+      <version>2.8.2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.androidx.lifecycle</groupId>
+      <artifactId>lifecycle-runtime-compose</artifactId>
+      <version>2.8.2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>androidx.datastore</groupId>
+      <artifactId>datastore-preferences-core-android</artifactId>
+      <version>1.2.1</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okio</groupId>
+      <artifactId>okio-jvm</artifactId>
+      <version>3.18.0</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+</project>
