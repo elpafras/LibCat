@@ -1,224 +1,211 @@
 # LibCat 🐱
 
-[![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin-Multiplatform-blue?style=for-the-badge&logo=kotlin)](https://kotlinlang.org/docs/multiplatform.html)
-[![Android API](https://img.shields.io/badge/Android-API%2026%2B-green?style=for-the-badge&logo=android)](https://developer.android.com/about/dashboards)
-[![iOS](https://img.shields.io/badge/iOS-13%2B-lightgrey?style=for-the-badge&logo=apple)](https://www.apple.com/ios/)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://opensource.org/licenses/MIT)
+![Kotlin Multiplatform](https://img.shields.io/badge/Kotlin-Multiplatform-blue?logo=kotlin)
+![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS-lightgrey)
+![Android API](https://img.shields.io/badge/Android-API%2026%2B-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-**LibCat** adalah library Kotlin Multiplatform (KMP) modern yang dirancang untuk manajemen tema (font, ukuran teks, dan skema warna) secara terpadu. LibCat memastikan pengalaman visual yang konsisten antara komponen **Native Compose Multiplatform** dan konten **WebView** (via CSS injection), berjalan di Android dan iOS.
-
----
-
-## 🚀 Kenapa LibCat?
-
-Banyak aplikasi menghadapi masalah "dua sumber kebenaran" (two sources of truth) saat mengelola tema: satu untuk UI Native (Jetpack Compose) dan satu lagi untuk konten WebView (HTML/CSS). Hal ini sering menyebabkan ketidaksinkronan visual dan overhead pengembangan.
-
-LibCat menyelesaikan masalah ini dengan:
-- **Unified State**: Menggunakan satu `SettingViewModel` sebagai sumber kebenaran tunggal yang reaktif.
-- **Dual-Mode Sync**: Mengupdate UI Native (via `LibCatTheme`) dan WebView (via `SettingManager`) secara otomatis saat pengguna mengubah preferensi.
-- **Cross-Platform**: Berbagi logika bisnis, persistensi data (DataStore), dan registry tema antara Android dan iOS.
+**LibCat** adalah library Kotlin Multiplatform (KMP) untuk manajemen tema (font, ukuran teks, dan skema warna) yang tersinkronisasi secara reaktif ke DUA jenis rendering: UI native Compose Multiplatform (via `LibCatTheme`) dan konten WebView (via `SettingManager` + CSS injection), berjalan di Android dan iOS.
 
 ---
 
-## 📦 Instalasi
+## 🚀 Instalasi
 
-1. Tambahkan repository GitHub Pages LibCat ke `settings.gradle.kts` project Anda:
+LibCat didistribusikan melalui self-hosted Maven repository di GitHub Pages.
+
+### 1. Tambahkan Repository
+Buka `settings.gradle.kts` dan tambahkan URL repository LibCat:
 
 ```kotlin
 dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // Repository LibCat
         maven { url = uri("https://elpafras.github.io/LibCat/repo") }
     }
 }
 ```
 
-2. Tambahkan dependency ke modul `commonMain` di `build.gradle.kts` project Anda:
+### 2. Tambahkan Dependency
+Buka `build.gradle.kts` di modul shared/kmp Anda (biasanya `commonMain`):
 
 ```kotlin
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.elpafras:libcat:2.1.0")
+            // Catatan: Artifact ID Maven adalah "setting" (mengikuti nama Gradle module internal), meskipun nama project tetap "LibCat".
+            implementation("io.github.elpafras:setting:2.0.0")
         }
     }
 }
 ```
-
-> [!NOTE]
-> Mulai versi 2.1.0, LibCat dipublikasikan via self-hosted Maven repository di GitHub Pages. Tidak diperlukan token, autentikasi, atau GPG signing untuk mengonsumsi library ini.
-
-**Requirements:**
-- Kotlin 2.4.10+
-- Compose Multiplatform 1.11.1+
-- Android API 26+
-- iOS 13+
+> **Info:** TIDAK PERLU token/autentikasi/signing apapun untuk memakai library ini.
 
 ---
 
 ## ⚡ Quick Start (3 Langkah)
 
 ### 1. Inisialisasi SettingViewModel
-Buat instance ViewModel menggunakan factory. Disarankan untuk menggunakan DI (Dependency Injection) seperti Koin atau Hilt.
-
-```kotlin
-// Contoh inisialisasi manual
-val repository = SettingDataStoreRepository(createDataStore(context))
-val settingViewModel = SettingViewModel(repository)
-```
+Buat instance `SettingViewModel` menggunakan `SettingRepository` (yang memerlukan DataStore).
 
 ### 2. Pasang LibCatTheme di Root
-Bungkus seluruh konten aplikasi Anda dengan `LibCatTheme` agar semua komponen Material3 otomatis tersinkronisasi.
+Bungkus aplikasi Anda dengan `LibCatTheme` agar seluruh komponen Material3 otomatis mengikuti tema.
 
-```kotlin
-setContent {
-    LibCatTheme(viewModel = settingViewModel) {
-        // Seluruh komponen Material3 di bawah ini otomatis mengikuti tema
-        MainAppContent()
-    }
-}
-```
-
-### 3. Tampilkan UI Pengaturan
-Gunakan `SettingBottomSheet` yang sudah disediakan untuk memberikan kontrol penuh kepada pengguna.
-
-```kotlin
-SettingBottomSheet(
-    show = isShowingSettings,
-    onDismiss = { isShowingSettings = false },
-    viewModel = settingViewModel
-)
-```
+### 3. Tampilkan Panel Pengaturan
+Gunakan `SettingBottomSheet` yang sudah disediakan untuk membiarkan pengguna mengganti tema.
 
 ---
 
-## 🛠️ Penggunaan: Dua Mode
+## 📖 Penggunaan Lengkap
 
-### A. Mode Native Compose
-Komponen Material3 (Text, Card, Button, dll) akan otomatis mendeteksi perubahan tema dari `LibCatTheme`. Jika Anda membutuhkan akses manual ke gaya teks:
-
-```kotlin
-@Composable
-fun MyNativeContent(viewModel: SettingViewModel) {
-    val style = rememberSettingTextStyle(viewModel)
-    
-    Text(
-        text = "Teks ini otomatis mengikuti pengaturan font & tema",
-        fontSize = style.fontSize,
-        fontFamily = style.fontFamily,
-        color = style.themeColors.textColor
-    )
-}
-```
-
-### B. Mode WebView
-Untuk konten berbasis HTML, LibCat menyuntikkan CSS secara reaktif ke dalam DOM.
+### A. Setup Dasar (SettingViewModel + Repository)
+LibCat menggunakan DataStore untuk persistensi. Anda perlu menyediakan path storage yang sesuai untuk masing-masing platform.
 
 **Android:**
 ```kotlin
-val manager = SettingManager(viewModel, fontInjector)
-manager.bind(webView, lifecycleOwner)
-
-webView.webViewClient = object : WebViewClient() {
-    override fun onPageFinished(view: WebView, url: String) {
-        manager.notifyPageReady(view)
-    }
-}
+val repository = SettingDataStoreRepository(
+    dataStore = DataStoreFactory(context).create()
+)
+val viewModel = SettingViewModel(repository)
 ```
 
 **iOS:**
 ```kotlin
-val manager = SettingManagerIOS(viewModel, fontInjector)
-manager.bind(wkWebView)
-// Panggil manager.notifyPageReady(wkWebView) di WKNavigationDelegate
+// Di iOS, path biasanya didapat dari NSFileManager
+val repository = SettingDataStoreRepository(
+    dataStore = DataStoreFactory(customPath).create()
+)
+val viewModel = SettingViewModel(repository)
+```
+
+### B. Tema untuk UI Native (LibCatTheme)
+`LibCatTheme` adalah komponen tingkat atas yang mengelola `MaterialTheme`.
+
+```kotlin
+setContent {
+    LibCatTheme(viewModel = settingViewModel) {
+        Scaffold {
+            // Semua komponen Material3 di dalamnya (Button, Scaffold, AlertDialog, 
+            // ModalNavigationDrawer, TextField, dst) otomatis mengikuti tema aktif 
+            // tanpa wiring manual.
+            MyAppContent()
+        }
+    }
+}
+```
+*   **Independen:** `LibCatTheme` sepenuhnya independen dari `isSystemInDarkTheme()` (mengikuti pilihan user).
+*   **Auto-Sync System Bars:** Status bar dan navigation bar akan berubah warna secara otomatis mengikuti tema aktif via `SystemBarsController` yang terintegrasi.
+
+### C. Akses langsung ke gaya teks (rememberSettingTextStyle)
+Jika Anda membutuhkan akses manual ke gaya teks (fontSize/fontFamily/warna tema) untuk kasus kustom:
+
+```kotlin
+val textStyle = rememberSettingTextStyle(viewModel = settingViewModel)
+
+Text(
+    text = "Halo LibCat",
+    fontSize = textStyle.fontSize,
+    fontFamily = textStyle.fontFamily,
+    color = textStyle.theme.onBackground // Akses skema warna aktif
+)
+```
+
+### D. Sinkronisasi ke WebView (SettingManager)
+LibCat dapat menyuntikkan CSS secara reaktif ke dalam WebView. API ini tersedia di Android dan iOS dengan pola yang mirip.
+
+**Android:**
+```kotlin
+val settingManager = SettingManager(viewModel, coroutineScope)
+AndroidView(
+    factory = { ctx ->
+        WebView(ctx).apply {
+            settingManager.bind(this) // Binding reaktif dimulai
+            loadUrl("https://artikel-anda.com")
+        }
+    },
+    update = { webView ->
+        settingManager.notifyPageReady() // Panggil saat halaman siap
+    }
+)
+```
+
+**iOS:**
+```kotlin
+// Menggunakan SettingManagerIOS berbasis WKWebView
+val settingManager = SettingManagerIOS(viewModel, coroutineScope)
+settingManager.bind(wkWebView)
+settingManager.notifyPageReady()
+```
+
+### E. Panel Pengaturan Siap Pakai (SettingBottomSheet)
+LibCat menyediakan UI Bottom Sheet standar yang modern.
+
+```kotlin
+var showSheet by remember { mutableStateOf(false) }
+
+SettingBottomSheet(
+    show = showSheet,
+    onDismiss = { showSheet = false },
+    viewModel = settingViewModel
+)
+```
+
+### F. Mengganti setting secara programatik
+Anda bisa mengubah pengaturan langsung dari kode melalui ViewModel:
+```kotlin
+viewModel.setTheme("dark")           // ID Tema: hvs, sepia, dark
+viewModel.setFontSize(20.sp)         // Ganti ukuran font
+viewModel.setFontStyle("serif")       // Ganti jenis font
 ```
 
 ---
 
-## 🎨 Kustomisasi Tema & Font
+## 🎨 Kustomisasi Tema
 
-### Menambah Tema Baru
-Daftarkan tema baru di `ThemeRegistry`. Setiap tema mendukung pemetaan lengkap ke slot Material3 `ColorScheme`.
-- ID tersedia saat ini: `hvs`, `padang_pasir`, `malam_cerah`, `batang_kayu`, dll.
+### Daftar Tema Default
+Saat ini LibCat mendukung ID tema berikut di `ThemeRegistry`:
+- `hvs`: Putih bersih (High Contrast).
+- `sepia`: Kekuningan (Nyaman untuk membaca).
+- `dark`: Gelap/Malam.
 
 ### Menambah Font Baru
-1. Letakkan file `.ttf` di:
-   - `commonMain/composeResources/font/` (Untuk Native)
-   - `androidMain/assets/font/` (Untuk WebView Android)
-2. Daftarkan nama file tersebut di `FontRegistry`.
-
-> **Note:** Karena perbedaan mekanisme rendering, saat ini font perlu didaftarkan di dua lokasi tersebut.
+Untuk menambah font kustom, Anda harus mendaftarkannya di dua lokasi (**Known Limitation**):
+1. **WebView:** Taruh file `.ttf` di `assets/font/`.
+2. **Native Compose:** Taruh file `.ttf` di Compose Resources library.
 
 ---
 
-## 📱 Sinkronisasi System Bars
+## 📊 Platform Support
 
-Mulai versi 1.3.1, **LibCat** secara otomatis mengelola warna OS-level chrome agar menyatu dengan tema aplikasi tanpa konfigurasi tambahan di sisi project pengguna.
-
-### Fitur Utama System Bars Sync:
-- **Auto-Sync**: Status bar dan navigation bar di Android akan otomatis mengikuti warna `background` dari tema yang aktif.
-- **Intelligent Icon Color**: LibCat menggunakan algoritma *contrast ratio* (WCAG standard) untuk menentukan apakah ikon sistem (jam, baterai, sinyal) harus berwarna gelap atau terang, memastikan legibilitas maksimal di segala warna background.
-- **Edge-to-Edge Experience**: Di Android, LibCat mendukung tampilan *edge-to-edge* dengan sinkronisasi warna bar navigasi bawah.
-- **CompositionLocal**: Tersedia `LocalSystemBarsController` jika Anda butuh memicu pembaruan warna secara manual atau melakukan kustomisasi di luar scope `LibCatTheme`.
-
-> [!NOTE]
-> **Catatan iOS:** Karena perbedaan arsitektur sistem, status bar di iOS mengikuti warna view di belakangnya secara transparan. Sinkronisasi style ikon (Light/Dark content) di iOS mungkin memerlukan konfigurasi manual pada root `UIViewController` project Anda.
+| Fitur | Android | iOS |
+|---|:---:|:---:|
+| LibCatTheme (native Compose) | ✅ | ✅ |
+| SettingManager (WebView) | ✅ | ✅ |
+| DataStore persistence | ✅ | ✅ |
+| Status bar/nav bar sync | ✅ | ⚠️ (lihat known limitations) |
 
 ---
 
-## 📱 Platform Support
-
-| Fitur                  | Android | iOS |
-|------------------------|:-------:|:---:|
-| Native Compose Theming |    ✅    |  ✅  |
-| WebView Sync           |    ✅    |  ✅  |
-| System Bars Sync       |    ✅    |  ⚠️  |
-| DataStore Persistence  |    ✅    |  ✅  |
-| Material3 Integration  |    ✅    |  ✅  |
+## 🏗️ Arsitektur Singkat
+LibCat bekerja dengan alur searah:
+`SettingViewModel` (commonMain) berperan sebagai **Source of Truth**. Perubahan di ViewModel akan dipancarkan ke `LibCatTheme` untuk UI Native dan melalui `SettingManager` (via JavaScript injection) untuk UI WebView (Android/iOS).
 
 ---
 
-## 📐 Arsitektur
-
-```mermaid
-graph TD
-    subgraph commonMain
-        VM[SettingViewModel] --> TR[ThemeRegistry]
-        VM --> FR[FontRegistry]
-    end
-    
-    subgraph UI Layers
-        VM --> |Reactive| LT[LibCatTheme - Native]
-        VM --> |JS Injection| SM[SettingManager - WebView]
-    end
-```
-
-`SettingViewModel` bertindak sebagai *Source of Truth* tunggal yang mendistribusikan state reaktif ke seluruh layer UI.
+## ⚠️ Known Limitations
+- **Font Assets**: Font perlu didaftarkan di dua lokasi (WebView assets & Compose Resources).
+- **Artifact ID**: Maven artifact bernama `setting`, bukan `libcat` (alasan historis, mengikuti nama Gradle module).
+- **iOS System Bars**: `SystemBarsController` untuk iOS memerlukan penyesuaian tambahan tergantung struktur root ViewController project consumer.
 
 ---
 
-## ⚠️ Batasan Saat Ini (Known Limitations)
-
-- **Double Font Assets**: Font harus diduplikasi di Compose Resources dan Android Assets untuk mendukung WebView.
-- **Sanitasi JS**: Input tema saat ini hanya menggunakan sanitasi dasar untuk injeksi JavaScript.
-- **Dynamic Themes**: Penambahan tema secara dinamis saat runtime (tanpa modifikasi registry) belum didukung sepenuhnya.
-
----
-
-## 🤝 Kontribusi
-
-Kami menerima kontribusi dalam bentuk Issue Report maupun Pull Request. Silakan baca [CONTRIBUTING.md](CONTRIBUTING.md) untuk panduan lebih lanjut.
+## 🤝 Contributing
+Jika Anda menemukan bug atau memiliki ide fitur, silakan buka Issue atau kirimkan Pull Request.
 
 ---
 
 ## 📄 Lisensi
+Library ini dilisensikan di bawah **MIT License**.
 
-MIT License. Copyright (c) 2026 LibCat Team.
-
-Lihat file [LICENSE](LICENSE) untuk detail lengkap.
-
----
-
-> [!IMPORTANT]
-> **Catatan Maintainer:** Pastikan fitur GitHub Pages sudah diaktifkan secara manual di pengaturan repositori (**Settings > Pages > Build and deployment > Source: Deploy from branch > Branch: gh-pages / repo**) sebelum menjalankan workflow publish untuk pertama kali.
+Copyright (c) 2026 Dri Handoko.
