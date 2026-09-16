@@ -35,7 +35,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             // Catatan: Artifact ID Maven adalah "setting" (mengikuti nama Gradle module internal), meskipun nama project tetap "LibCat".
-            implementation("io.github.elpafras:setting:2.0.0")
+            implementation("io.github.elpafras:setting:2.1.0")
         }
     }
 }

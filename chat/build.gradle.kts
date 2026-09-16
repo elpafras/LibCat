@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.elpafras"
-version = project.findProperty("version") as? String ?: "1.0.0"
+version = project.findProperty("version") as? String ?: "2.1.0"
 
 kotlin {
     android {
