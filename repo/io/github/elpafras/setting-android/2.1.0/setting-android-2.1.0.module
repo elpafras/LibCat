@@ -1,0 +1,193 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../setting/2.1.0/setting-2.1.0.module",
+    "group": "io.github.elpafras",
+    "module": "setting",
+    "version": "2.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.6.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "setting.aar",
+          "url": "setting-android-2.1.0.aar",
+          "size": 4237111,
+          "sha512": "d4ab8f79b655e7a7bd89858d505d6ee29aa179cce873b4ce921ac8a22d68260cb161ca6ea9428caedb6ea7aeff79ed197ec6117d71a6f3b6d01b18c84ec9d225",
+          "sha256": "bda3d82dd91c3a8f8d5fcbc7d8db88c6ac75d010f6909407607b78cbf89e2024",
+          "sha1": "bdd323441e928d863479795c83f7fc7c40b512a3",
+          "md5": "b7733f4a70d7f8c9f2207effaa9abaa9"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core-ktx",
+          "version": {
+            "requires": "1.19.0"
+          }
+        },
+        {
+          "group": "androidx.appcompat",
+          "module": "appcompat",
+          "version": {
+            "requires": "1.8.0"
+          }
+        },
+        {
+          "group": "com.google.android.material",
+          "module": "material",
+          "version": {
+            "requires": "1.14.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.runtime",
+          "module": "runtime",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.foundation",
+          "module": "foundation",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.material3",
+          "module": "material3",
+          "version": {
+            "requires": "1.12.0-alpha03"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.components",
+          "module": "components-resources",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.compose.components",
+          "module": "components-ui-tooling-preview",
+          "version": {
+            "requires": "1.12.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.androidx.lifecycle",
+          "module": "lifecycle-viewmodel",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.androidx.lifecycle",
+          "module": "lifecycle-viewmodel-compose",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.androidx.lifecycle",
+          "module": "lifecycle-runtime-compose",
+          "version": {
+            "requires": "2.11.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore-preferences-core",
+          "version": {
+            "requires": "1.2.1"
+          }
+        },
+        {
+          "group": "com.squareup.okio",
+          "module": "okio",
+          "version": {
+            "requires": "3.18.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "setting.aar",
+          "url": "setting-android-2.1.0.aar",
+          "size": 4237111,
+          "sha512": "d4ab8f79b655e7a7bd89858d505d6ee29aa179cce873b4ce921ac8a22d68260cb161ca6ea9428caedb6ea7aeff79ed197ec6117d71a6f3b6d01b18c84ec9d225",
+          "sha256": "bda3d82dd91c3a8f8d5fcbc7d8db88c6ac75d010f6909407607b78cbf89e2024",
+          "sha1": "bdd323441e928d863479795c83f7fc7c40b512a3",
+          "md5": "b7733f4a70d7f8c9f2207effaa9abaa9"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "setting-android-2.1.0-sources.jar",
+          "url": "setting-android-2.1.0-sources.jar",
+          "size": 30563,
+          "sha512": "8d5fd57936e30f178b37c7d9b170545d1d5ca4a249bbcad53b5f91bac825c8d48047ddd2dd67080ffcc864c054ed0fee068e809a2a3a3b26ff26fa75332e1e8c",
+          "sha256": "04f7f6ad8ab29723f05a19937fe90d2a1217ad8c710f46528b449c74fe5cbb37",
+          "sha1": "8feaa8db5799a743b517c7b758ec917f1b9640af",
+          "md5": "10bbc2e9e2d796812c744378b8c6abac"
+        }
+      ]
+    }
+  ]
+}
