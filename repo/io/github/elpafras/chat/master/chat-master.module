@@ -1,0 +1,247 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.elpafras",
+    "module": "chat",
+    "version": "master",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.6.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.8.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore-preferences-core",
+          "version": {
+            "requires": "1.2.1"
+          }
+        },
+        {
+          "group": "com.squareup.okio",
+          "module": "okio",
+          "version": {
+            "requires": "3.18.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "chat-metadata-master.jar",
+          "url": "chat-master.jar",
+          "size": 8198,
+          "sha512": "dd573fe2fa63c60ea8bfe90c74d105c3e053bb319c82a714b881d3688a99adc21f0ab5309987b534ebecdee582e5518d5ee837b703edde4ca74b2bea3d66984d",
+          "sha256": "b6d7dd45a32df7591b546660fb345adb776d66f334d5b6c8fbe173a61aa7a559",
+          "sha1": "757d7c9fe6a9d800c68a814ae5dd57dde4ce12fc",
+          "md5": "a5fcf40769f02e7a6d9dbf5d38b61a13"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "chat-kotlin-master-sources.jar",
+          "url": "chat-master-sources.jar",
+          "size": 6682,
+          "sha512": "0e87ca256a7579350dbf89e713fc3ca91ce3ddbc62b054d12d24fa529c3673a2cb3772ed33602ab1ac9b320d89e0592b9be7869714b12c55f3dc45e9cebf90b2",
+          "sha256": "fa380e273a99fc65a8fada4ca0e0a59215b2b32d5e7fb08f43eeefeda76c8ba9",
+          "sha1": "36fd1b7fa380613f4147a8086ab2b79e6d0b1c41",
+          "md5": "ecd4de4cb935bd1fa39e8437d3545fd5"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../chat-android/master/chat-android-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-android",
+        "version": "master"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../chat-android/master/chat-android-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-android",
+        "version": "master"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../chat-android/master/chat-android-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-android",
+        "version": "master"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../chat-iosarm64/master/chat-iosarm64-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-iosarm64",
+        "version": "master"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../chat-iosarm64/master/chat-iosarm64-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-iosarm64",
+        "version": "master"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../chat-iosarm64/master/chat-iosarm64-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-iosarm64",
+        "version": "master"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../chat-iossimulatorarm64/master/chat-iossimulatorarm64-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-iossimulatorarm64",
+        "version": "master"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../chat-iossimulatorarm64/master/chat-iossimulatorarm64-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-iossimulatorarm64",
+        "version": "master"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../chat-iossimulatorarm64/master/chat-iossimulatorarm64-master.module",
+        "group": "io.github.elpafras",
+        "module": "chat-iossimulatorarm64",
+        "version": "master"
+      }
+    }
+  ]
+}

@@ -3,11 +3,11 @@
   <groupId>io.github.elpafras</groupId>
   <artifactId>setting</artifactId>
   <versioning>
-    <latest>2.0.0</latest>
-    <release>2.0.0</release>
+    <latest>master</latest>
+    <release>master</release>
     <versions>
-      <version>2.0.0</version>
+      <version>master</version>
     </versions>
-    <lastUpdated>20260811110539</lastUpdated>
+    <lastUpdated>20260916114943</lastUpdated>
   </versioning>
 </metadata>

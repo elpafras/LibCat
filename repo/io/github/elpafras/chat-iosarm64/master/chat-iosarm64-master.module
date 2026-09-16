@@ -1,0 +1,158 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../chat/master/chat-master.module",
+    "group": "io.github.elpafras",
+    "module": "chat",
+    "version": "master",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.6.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.8.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore-preferences-core",
+          "version": {
+            "requires": "1.2.1"
+          }
+        },
+        {
+          "group": "com.squareup.okio",
+          "module": "okio",
+          "version": {
+            "requires": "3.18.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "chat-iosArm64Main-master.klib",
+          "url": "chat-iosarm64-master.klib",
+          "size": 28871,
+          "sha512": "02704f2d79ef0ccd983666502ce303c5e188eebea250d0d5b188638111c803e8b43d11a374a10b5ca154539fea331ac3e81e3a35cfa1ddaacb0666f5dc2ee22a",
+          "sha256": "a120322b37e875fe7e08952e744f428f203bdab6606711e95e8bf3b18bbf3a30",
+          "sha1": "7aa66ec77a7ad4b25c4cf3644bee9b40fe73be8b",
+          "md5": "80ddc133253e36d36bd7dc2055bbcb87"
+        }
+      ]
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "chat-iosarm64-master-sources.jar",
+          "url": "chat-iosarm64-master-sources.jar",
+          "size": 6682,
+          "sha512": "92959b0f72d87d1b9c4697f4926b1d3350342f08cba2ae6cf746c020f90632de68fcdfaf7827804838aa1a979c29389b8f270d7ed6f40609d0ef3301c00d3f37",
+          "sha256": "0c85f7684b19242a3afc1e11d2903b3f7368e6701a07b542a6ab79c8638b92fd",
+          "sha1": "74e2de3ecfc317cdac578d9a3b94ef8bdec95083",
+          "md5": "fbd4124b054a56796382303e9b239b63"
+        }
+      ]
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.4.20"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.11.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-datetime",
+          "version": {
+            "requires": "0.8.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore-preferences-core",
+          "version": {
+            "requires": "1.2.1"
+          }
+        },
+        {
+          "group": "com.squareup.okio",
+          "module": "okio",
+          "version": {
+            "requires": "3.18.2"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "chat-iosarm64-master-metadata.jar",
+          "url": "chat-iosarm64-master-metadata.jar",
+          "size": 2442,
+          "sha512": "8dc0551ba1c0e8f2c151aec844429155aa2033fc10a00860247670da20b59e9578ccb556f41a2824236b8f458cffdd25dc71e8495c1667ec1c9ec76c0633efc4",
+          "sha256": "39753ed1d01ed6ae29bea4f73283e30148534d1e257e309d11e8126f62cddce0",
+          "sha1": "dd84aabf6a757d267f55e5f82a666738bf3a252c",
+          "md5": "57215f95a3472b133cdb01813d951437"
+        }
+      ]
+    }
+  ]
+}
