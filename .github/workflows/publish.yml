@@ -31,12 +31,13 @@ jobs:
       - name: Build and publish to local repo folder
         run: |
           ./gradlew :setting:publishAllPublicationsToLocalRepoRepository \
+            :chat:publishAllPublicationsToLocalRepoRepository \
             -Pversion=${{ steps.version.outputs.version }}
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./setting/build/repo
+          publish_dir: ./build/repo
           destination_dir: repo
           keep_files: true

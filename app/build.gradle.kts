@@ -53,6 +53,9 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.datastore.preferences.core)
+    implementation(libs.androidx.datastore)
+    implementation(libs.okio)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,4 +64,5 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(project(":setting"))
+    implementation(project(":chat"))
 }

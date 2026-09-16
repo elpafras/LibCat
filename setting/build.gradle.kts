@@ -10,12 +10,10 @@ group = "io.github.elpafras"
 version = project.findProperty("version") as? String ?: "2.1.0"
 
 kotlin {
-    iosX64()
     iosArm64()
     iosSimulatorArm64()
 
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
@@ -104,7 +102,7 @@ publishing {
     repositories {
         maven {
             name = "LocalRepo"
-            url = uri(layout.buildDirectory.dir("repo"))
+            url = uri(rootProject.layout.buildDirectory.dir("repo"))
         }
     }
 }

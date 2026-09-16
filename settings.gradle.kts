@@ -27,3 +27,4 @@ dependencyResolutionManagement {
 rootProject.name = "LibCat"
 include(":app")
 include(":setting")
+include(":chat")
